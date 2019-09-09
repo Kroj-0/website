@@ -1,0 +1,21 @@
+@import url(https://fonts.googleapis.com/css?family=Open+Sans);
+body {
+  margin: 0;
+  padding: 0;
+  background-color: #121212;
+  text-align: center;
+}
+
+#timer {
+	width: 70%;
+    margin-right: 15%;
+    margin-left: 15%;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+h1 {
+	color: #c6c6c6;
+    font: bold 4em Open Sans, serif;
+}
