@@ -30,6 +30,12 @@
         dt { font-style: italic; font-weight: bold; font-size: 18px; text-align: right; padding: 0 26px 0 0; width: 150px; float: left; height: 100px; border-right: 1px solid #999;  }
         dd { width: 600px; float: right; }
         dd.clear { float: none; margin: 0; height: 15px; }
+        #languages {
+            display: inline;
+            float:right;
+            font-size: 18px;
+            font-weight: normal;"
+        }
         @media only screen and (max-width:620px) {
           /* For mobile phones: */
           #page-wrap {
@@ -61,10 +67,12 @@
             position:relative;
             display: block;
           }
+          #languages {
+            font-size: 16px;
+          }
         }
      </style>
 </head>
-
 <body>
 
     <div id="page-wrap">
@@ -76,7 +84,7 @@
             <!-- Microformats! -->
         
             <h1 class="fn">Simone Gnani 
-            <div style="display: inline; float:right; font-size: 18px; font-weight: normal;">
+            <div id="languages">
             (<a href="/en">english</a>/<a href="/" class="bold">italian</a>)</div></h1>
             
             <p>
