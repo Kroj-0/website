@@ -5,13 +5,13 @@
 
 <head>
      <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-
+     <meta name="viewport" content="width=device-width, initial-scale=1.0">
      <title>Simone Gnani CV</title>
 
      <link rel='shortcut icon' href='favicon.ico' type='image/x-icon' />
      <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Open+Sans" />
 
-     <style type="text/css">
+          <style type="text/css">
         * { margin: 0; padding: 0; }
         body { font-family: "Open Sans"; font-size: 16px; font-style: normal; font-variant: normal; line-height: 24px; background: url(/images/noise.jpg); }
         .clear { clear: both; }
@@ -30,6 +30,38 @@
         dt { font-style: italic; font-weight: bold; font-size: 18px; text-align: right; padding: 0 26px 0 0; width: 150px; float: left; height: 100px; border-right: 1px solid #999;  }
         dd { width: 600px; float: right; }
         dd.clear { float: none; margin: 0; height: 15px; }
+        @media only screen and (max-width:620px) {
+          /* For mobile phones: */
+          #page-wrap {
+            width:95%;
+            margin:auto;
+          }
+          #pic {
+            width:74%;
+            display: block;
+            margin:auto;
+            padding-left: 13%;
+            padding-right: 13%;
+          }
+          #objective, dd {
+            width:100%;
+            margin:auto;
+          }
+          dt { 
+            padding-right:6%;
+            padding-left:6%;
+            margin:20px 2% 15px 2%;
+            width: 84%;
+            height:25px;
+            float:right;
+            border-right: none;
+            border-bottom: 1px solid #999;
+          }
+          h2 span{
+            position:relative;
+            display: block;
+          }
+        }
      </style>
 </head>
 
