@@ -1,0 +1,19 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<script src="js/jquery-3.4.1.min.js"></script>
+</head>
+<body>
+	<p>Before the script...</p>
+	<p id="insert">Prova</p>
+	<p>...After the script.</p>
+	<script type="text/javascript">
+		// document.getElementById("insert").innerHTML = "Hello world!";
+		// $("#insert").html("Hello World2!");
+		$.getJSON('http://www.whateverorigin.org/get?url=' + encodeURIComponent('https://www.overleaf.com/project/5e4a5a1ab429920001ea2f71') + '&callback=?', function(data){
+			$("#insert").html(data.contents);
+		});
+	</script>
+</body>
+
+</html>
