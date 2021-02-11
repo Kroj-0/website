@@ -1,0 +1,35 @@
+body {
+	background-color: #272822;
+	color: #F8F8F2;
+}
+select.dark-select{
+	background-color: #343a40;
+	padding:1%;
+	border:none;
+	color: #F5F5F0;
+}
+
+.comment {
+	color:#75715E; 
+}
+.red {
+	color:#F92672; 
+}
+.orange {
+	color:#FD971F; 
+}
+.lightorange {
+	color:#E69F66; 
+}
+.yellow {
+	color:#E6DB74; 
+}
+.green {
+	color:#A6E22E; 
+}
+.blue {
+	color:#66D9EF; 
+}
+.purple {
+	color:#AE81FF; 
+}
