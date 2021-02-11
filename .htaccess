@@ -1,1 +1,3 @@
 AddHandler av-php5 .php
+
+Redirect 301 /msa_project.html https://colab.research.google.com/drive/1ZTezc8f2kqulIDKN5nDnloZr8ol-5UMM?usp=sharing
