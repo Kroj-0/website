@@ -1,0 +1,180 @@
+<html>
+<head>
+ <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+  <script src="https://unpkg.com/survey-jquery@1.8.22/survey.jquery.min.js"></script>
+  <script src="https://use.fontawesome.com/12825f821a.js"></script>
+  <script src="https://kit.fontawesome.com/93028db3a0.js" crossorigin="anonymous"></script>
+  <!-- Data Tables -->
+  <script src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js"></script>
+  <script src="https://cdn.datatables.net/1.10.22/js/dataTables.bootstrap4.min.js"></script>
+
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons"/>
+
+  <!-- BOOTSTRAP Stylesheet -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+  <!-- BOOTSTRAP JS -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
+  <!-- my css -->
+  <link rel="stylesheet" type="text/css" href="../css/stylesheet.css"  />
+
+</head>
+
+<body>
+<main role="main">
+<div class="container">
+
+<!-- <video>
+    <source src="videos/train_adam_0127.mp4" type="video/mp4">
+</video> -->
+<h1>Edge-detections of biometric data</h1>
+<div class="embed-responsive embed-responsive-21by9">
+<video poster="" id="player" playsinline controls></video>
+</div>
+<!-- <div class="mt-3 d-flex justify-content-center">
+<select class="form-select form-select-lg h3 dark-select" aria-label=".form-select-lg example" id="video_src" name="video_src" onchange="changeVideo()">
+  <option value="train_mom_0119">Mobilenet Momentum 19/01</option>
+  <option value="train_adam_0127">Mobilenet Adam 27/01</option>
+  <option value="train_mobilenet_final">Mobilenet Final</option>
+  <option value="train_centernet_final">Centernet Final</option>
+</select>
+</div>
+</div> -->
+ 
+
+<div class="table-responsive">
+  <table class="table table-bordered ">
+    <thead>
+      <tr>
+        <th scope="col">Video</th>
+        <th scope="col">MobileNetV2</th>
+        <th scope="col">MobileNetFPN</th>
+        <th scope="col">CenterNet</th>
+        <th scope="col">EfficientNet</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <th scope="row">EnterExitCrossingPaths1cor</th>
+        <td>View</td>
+        <td>View</td>
+        <td>View</td>
+        <td>View</td>
+      </tr>
+      <tr>
+        <th scope="row">OneStopMoveEnter1front</th>
+        <td>View</td>
+        <td>View</td>
+        <td>View</td>
+        <td>View</td>
+      </tr>
+      <tr>
+        <th scope="row">OneStopMoveEnter2cor</th>
+        <td>View</td>
+        <td>View</td>
+        <td>View</td>
+        <td>View</td>
+      </tr>
+      <tr>
+        <th scope="row">OneStopMoveNoEnter1cor</th>
+        <td>View</td>
+        <td>View</td>
+        <td>View</td>
+        <td>View</td>
+      </tr>
+      <tr>
+        <th scope="row">OneStopMoveNoEnter1front</th>
+        <td>View</td>
+        <td>View</td>
+        <td>View</td>
+        <td>View</td>
+      </tr>
+      <tr>
+        <th scope="row">OneStopMoveNoEnter2front</th>
+        <td>View</td>
+        <td>View</td>
+        <td>View</td>
+        <td>View</td>
+      </tr>
+      <tr>
+        <th scope="row">OneStopNoEnter2front</th>
+        <td>View</td>
+        <td>View</td>
+        <td>View</td>
+        <td>View</td>
+      </tr>
+      <tr>
+        <th scope="row">ShopAssistant2cor</th>
+        <td>View</td>
+        <td>View</td>
+        <td>View</td>
+        <td>View</td>
+      </tr>
+      <tr>
+        <th scope="row">TwoEnterShop3front</th>
+        <td>View</td>
+        <td>View</td>
+        <td>View</td>
+        <td>View</td>
+      </tr>
+      <tr>
+        <th scope="row">TwoLeaveShop1front</th>
+        <td>View</td>
+        <td>View</td>
+        <td>View</td>
+        <td>View</td>
+      </tr>
+    </tbody>
+
+  </table>
+</div>
+
+</div>
+</main>
+</body>
+<script type="text/javascript">
+  $( document ).ready(function() {
+    
+    console.log('load video');
+    var video = document.getElementById('player');
+    // console.log(video);
+    var source = document.createElement('source');
+    source.setAttribute('src', '');
+    video.appendChild(source);
+    // console.log(video.lastChild);
+
+    function changeVideo(dir,video_name){
+      console.log('change video');
+      var video = document.getElementById('player');
+      // video.pause();
+      console.log(video);
+      console.log(video.lastChild);
+      video.lastChild.setAttribute('src', '../videos/'+dir+'/'+video_name+'.mp4'); 
+      video.load();
+      return true;
+    }
+
+  
+    $('td').click( function() {
+      var map = {
+        "Video" : 'stacked',
+        "MobileNetV2" : "mobilenet2",
+        "MobileNetFPN" : "mobilenet2fpn",
+        "CenterNet" : "centernet",
+        "EfficientNet" : "efficientnet",
+      };
+      var video_name = $(this).parent().find('th:eq(0)').text();
+      var network = $(this).closest('tbody').prev('thead').find('> tr > th:eq(' + $(this).index() + ')').html();
+      var dir = map[network];
+      console.log('changing to /video/'+dir+'/'+video_name+".mp4");
+      var done = changeVideo(dir,video_name)
+    });
+  });
+
+
+</script>
+</html>

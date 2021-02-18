@@ -20,7 +20,7 @@
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 
   <!-- my css -->
-  <link rel="stylesheet" type="text/css" href="/css/stylesheet.css"  />
+  <link rel="stylesheet" type="text/css" href="../css/stylesheet.css"  />
 
 </head>
 
@@ -58,7 +58,7 @@
     console.log(video);
     var video_src = document.getElementById('video_src').value;
     var source = document.createElement('source');
-    source.setAttribute('src', '/videos/'+video_src+'.mp4');
+    source.setAttribute('src', '../videos/'+video_src+'.mp4');
     video.appendChild(source);
     console.log(video.lastChild);
     // video.load();
@@ -70,7 +70,7 @@
     video.pause();
     console.log(video);
     console.log(video.lastChild);
-    video.lastChild.setAttribute('src', '/videos/'+video_src+'.mp4'); 
+    video.lastChild.setAttribute('src', '../videos/'+video_src+'.mp4'); 
     video.load();
     return false;
   }
