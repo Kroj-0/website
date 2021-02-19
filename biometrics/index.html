@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html>
 <head>
  <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -33,7 +34,7 @@
 </video> -->
 <h1>Edge-detections of biometric data</h1>
 <div class="embed-responsive embed-responsive-21by9">
-<video poster="" id="player" playsinline controls></video>
+<video poster="" id="player" playsinline controls="controls"></video>
 </div>
 <!-- <div class="mt-3 d-flex justify-content-center">
 <select class="form-select form-select-lg h3 dark-select" aria-label=".form-select-lg example" id="video_src" name="video_src" onchange="changeVideo()">
@@ -144,16 +145,17 @@
     // console.log(video);
     var source = document.createElement('source');
     source.setAttribute('src', '');
+    source.setAttribute('type',"video/webm");
     video.appendChild(source);
     // console.log(video.lastChild);
 
     function changeVideo(dir,video_name){
       console.log('change video');
       var video = document.getElementById('player');
-      // video.pause();
+      video.pause();
       console.log(video);
       console.log(video.lastChild);
-      video.lastChild.setAttribute('src', '../videos/'+dir+'/'+video_name+'.mp4'); 
+      video.lastChild.setAttribute('src', '../videos/'+dir+'/'+video_name+'.webm'); 
       video.load();
       return true;
     }
@@ -161,7 +163,6 @@
   
     $('td').click( function() {
       var map = {
-        "Video" : 'stacked',
         "MobileNetV2" : "mobilenet2",
         "MobileNetFPN" : "mobilenet2fpn",
         "CenterNet" : "centernet",
@@ -170,9 +171,28 @@
       var video_name = $(this).parent().find('th:eq(0)').text();
       var network = $(this).closest('tbody').prev('thead').find('> tr > th:eq(' + $(this).index() + ')').html();
       var dir = map[network];
-      console.log('changing to /video/'+dir+'/'+video_name+".mp4");
+      console.log('changing to /videos/'+dir+'/'+video_name+".webm");
       var done = changeVideo(dir,video_name)
     });
+    $('td').hover(function() {
+        $(this).css('cursor','pointer');
+    }, function() {
+        $(this).css('cursor','auto');
+    });
+
+
+    $('th[scope="row"]').click( function() {
+      var video_name = $(this).text();
+      console.log('changing to /videos/stacked/'+video_name+".webm");
+      var done = changeVideo('stacked',video_name)
+    });
+    $('th[scope="row"]').hover(function() {
+        $(this).css('cursor','pointer');
+    }, function() {
+        $(this).css('cursor','auto');
+    });
+
+
   });
 
 
