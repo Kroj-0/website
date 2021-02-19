@@ -177,25 +177,47 @@
       console.log('changing to /videos/'+dir+'/'+video_name+".webm");
       var done = changeVideo(dir,video_name)
     });
-    $('td').hover(function() {
-        $(this).css('cursor','pointer');
-    }, function() {
-        $(this).css('cursor','auto');
-    });
-
 
     $('th[scope="row"]').click( function() {
       var video_name = $(this).text();
       console.log('changing to /videos/stacked/'+video_name+".webm");
       var done = changeVideo('stacked',video_name)
     });
-    $('th[scope="row"]').hover(function() {
-        $(this).css('cursor','pointer');
-    }, function() {
-        $(this).css('cursor','auto');
-    });
 
+    function highlightcell(){
+      var bgcolor = $(this).css("background-color");//chiaro);
+      var rgb = bgcolor.slice(4,-1).split(',');
+      var newColor = 'rgb('
+        +(parseInt(rgb[0])+10).toString()+','
+        +(parseInt(rgb[1])+10).toString()+','
+        +(parseInt(rgb[2])+10).toString()+')'
+      // console.log(newColor);
+      // var txtcolor = $(this).css("color");
+      $(this).css("background-color",newColor);//LightenDarkenColor(bgcolor,+10));
+      // $(this).css("color",LightenDarkenColor(txtcolor,+10));
+      // console.log('lighten bgcolor: '+bgcolor+" --> "+newColor);
+      // console.log('lighten color: '+color+" --> "+LightenDarkenColor(color,+10));
+      $(this).css('cursor','pointer');
+    }
 
+    function unhighlightcell(){
+      var bgcolor = $(this).css("background-color");//chiaro);
+      var rgb = bgcolor.slice(4,-1).split(',');
+      var newColor = 'rgb('
+        +(parseInt(rgb[0])-10).toString()+','
+        +(parseInt(rgb[1])-10).toString()+','
+        +(parseInt(rgb[2])-10).toString()+')'
+      // console.log(newColor);
+      // var txtcolor = $(this).css("color");
+      $(this).css("background-color",newColor);//LightenDarkenColor(bgcolor,+10));
+      // $(this).css("color",LightenDarkenColor(txtcolor,+10));
+      // console.log('lighten bgcolor: '+bgcolor+" --> "+newColor);
+      // console.log('lighten color: '+color+" --> "+LightenDarkenColor(color,+10));
+      $(this).css('cursor','pointer');
+    }
+
+    $('td').hover(highlightcell,unhighlightcell);
+    $('th[scope="row"]').hover(highlightcell,unhighlightcell);
   });
 
 
