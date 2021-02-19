@@ -149,6 +149,9 @@
     video.appendChild(source);
     // console.log(video.lastChild);
 
+    $('th[scope="row"]').addClass("blue");
+    $('th[scope="col"]').addClass("lightorange");
+
     function changeVideo(dir,video_name){
       console.log('change video');
       var video = document.getElementById('player');
