@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html>
+<head>
+ <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <script src="https://code.jquery.com/jquery-latest.min.js"></script>
+  <script src="https://unpkg.com/survey-jquery@1.8.22/survey.jquery.min.js"></script>
+  <script src="https://use.fontawesome.com/12825f821a.js"></script>
+  <script src="https://kit.fontawesome.com/93028db3a0.js" crossorigin="anonymous"></script>
+  <!-- Data Tables -->
+  <script src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js"></script>
+  <script src="https://cdn.datatables.net/1.10.22/js/dataTables.bootstrap4.min.js"></script>
+
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons"/>
+
+  <!-- BOOTSTRAP Stylesheet -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+  <!-- BOOTSTRAP JS -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
+  <!-- my css -->
+  <link rel="stylesheet" type="text/css" href="../css/stylesheet.css"  />
+
+</head>
+
+<body>
+<main role="main">
+<div class="container">
+
+<!-- <video>
+    <source src="videos/train_adam_0127.mp4" type="video/mp4">
+</video> -->
+<h1>CPU Tracking</h1>
+<div class="embed-responsive embed-responsive-21by9">
+<video poster="" id="player" playsinline controls="controls"></video>
+</div>
+<!-- <div class="mt-3 d-flex justify-content-center">
+<select class="form-select form-select-lg h3 dark-select" aria-label=".form-select-lg example" id="video_src" name="video_src" onchange="changeVideo()">
+  <option value="train_mom_0119">Mobilenet Momentum 19/01</option>
+  <option value="train_adam_0127">Mobilenet Adam 27/01</option>
+  <option value="train_mobilenet_final">Mobilenet Final</option>
+  <option value="train_centernet_final">Centernet Final</option>
+</select>
+</div>
+</div> -->
+ 
+
+<div class="table-responsive">
+  <table class="table table-bordered ">
+    <thead>
+      <tr>
+        <th scope="col">Day</th>
+        <th scope="col">Cam1</th>
+        <th scope="col">Cam2</th>
+        <th scope="col">Cam3</th>
+        <th scope="col">Cam4</th>
+        <th scope="col">Cam5</th>
+        <th scope="col">Cam6</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <th scope="row">1</th>
+        <td>View</td>
+        <td>View</td>
+        <td>View</td>
+        <td>View</td>
+        <td>View</td>
+        <td>View</td>
+      </tr>
+      <tr>
+        <th scope="row">2</th>
+        <td>View</td>
+        <td>View</td>
+        <td>View</td>
+        <td>View</td>
+        <td>View</td>
+        <td>View</td>
+      </tr>
+      <tr>
+        <th scope="row">3</th>
+        <td>View</td>
+        <td>View</td>
+        <td>View</td>
+        <td>View</td>
+        <td>View</td>
+        <td>View</td>
+      </tr>
+      <tr>
+        <th scope="row">4</th>
+        <td>View</td>
+        <td>View</td>
+        <td>View</td>
+        <td>View</td>
+        <td>View</td>
+        <td>View</td>
+      </tr>
+      <tr>
+        <th scope="row">5</th>
+        <td>View</td>
+        <td>View</td>
+        <td>View</td>
+        <td>View</td>
+        <td>View</td>
+        <td>View</td>
+      </tr>
+      <tr>
+        <th scope="row">6</th>
+        <td>View</td>
+        <td>View</td>
+        <td>View</td>
+        <td>View</td>
+        <td>View</td>
+        <td>View</td>
+      </tr>
+      <tr>
+        <th scope="row">7</th>
+        <td>View</td>
+        <td>View</td>
+        <td>View</td>
+        <td>View</td>
+        <td>View</td>
+        <td>View</td>
+      </tr>
+      <tr>
+        <th scope="row">8</th>
+        <td>View</td>
+        <td>View</td>
+        <td>View</td>
+        <td>View</td>
+        <td>View</td>
+        <td>View</td>
+      </tr>
+      <tr>
+        <th scope="row">9</th>
+        <td>View</td>
+        <td>View</td>
+        <td>View</td>
+        <td>View</td>
+        <td>View</td>
+        <td>View</td>
+      </tr>
+      <tr>
+        <th scope="row">10</th>
+        <td>View</td>
+        <td>View</td>
+        <td>View</td>
+        <td>View</td>
+        <td>View</td>
+        <td>View</td>
+      </tr>
+      <tr>
+        <th scope="row">11</th>
+        <td>View</td>
+        <td>View</td>
+        <td>View</td>
+        <td>View</td>
+        <td>View</td>
+        <td>View</td>
+      </tr>
+    </tbody>
+
+  </table>
+</div>
+
+</div>
+</main>
+</body>
+<script type="text/javascript">
+  $( document ).ready(function() {
+    
+    console.log('load video');
+    var video = document.getElementById('player');
+    // console.log(video);
+    var source = document.createElement('source');
+    source.setAttribute('src', '');
+    source.setAttribute('type',"video/mp4");
+    video.appendChild(source);
+    // console.log(video.lastChild);
+
+    $('th[scope="row"]').addClass("blue");
+    $('th[scope="col"]').addClass("lightorange");
+
+    function changeVideo(vid_num,cam_num){
+      console.log('change video');
+      var video = document.getElementById('player');
+      video.pause();
+      console.log(video);
+      console.log(video.lastChild);
+      video.lastChild.setAttribute('src', '../videos/tracking_comp/tracking_'+vid_num+'_'+cam_num+'.mp4'); 
+      video.load();
+      return true;
+    }
+
+  
+    $('td').click( function() {
+      // var map = {
+      //   "MobileNetV2" : "mobilenet2",
+      //   "MobileNetFPN" : "mobilenet2fpn",
+      //   "CenterNet" : "centernet",
+      //   "EfficientNet" : "efficientnet",
+      // }
+      var vid_num = $(this).parent().find('th:eq(0)').text();
+      var cam_num = $(this).closest('tbody').prev('thead').find('> tr > th:eq(' + $(this).index() + ')').html()[3];
+      // var dir = map[network];
+      // console.log('changing to /videos/'+dir+'/'+video_name+".webm");
+      var done = changeVideo(vid_num,cam_num)
+    });
+
+    // $('th[scope="row"]').click( function() {
+    //   var video_name = $(this).text();
+    //   // console.log('changing to /videos/stacked/'+video_name+".webm");
+    //   var done = changeVideo('stacked',video_name)
+    // });
+
+    function highlightcell(){
+      var bgcolor = $(this).css("background-color");//chiaro);
+      var rgb = bgcolor.slice(4,-1).split(',');
+      var newColor = 'rgb('
+        +(parseInt(rgb[0])+10).toString()+','
+        +(parseInt(rgb[1])+10).toString()+','
+        +(parseInt(rgb[2])+10).toString()+')'
+      // console.log(newColor);
+      // var txtcolor = $(this).css("color");
+      $(this).css("background-color",newColor);//LightenDarkenColor(bgcolor,+10));
+      // $(this).css("color",LightenDarkenColor(txtcolor,+10));
+      // console.log('lighten bgcolor: '+bgcolor+" --> "+newColor);
+      // console.log('lighten color: '+color+" --> "+LightenDarkenColor(color,+10));
+      $(this).css('cursor','pointer');
+    }
+
+    function unhighlightcell(){
+      var bgcolor = $(this).css("background-color");//chiaro);
+      var rgb = bgcolor.slice(4,-1).split(',');
+      var newColor = 'rgb('
+        +(parseInt(rgb[0])-10).toString()+','
+        +(parseInt(rgb[1])-10).toString()+','
+        +(parseInt(rgb[2])-10).toString()+')'
+      // console.log(newColor);
+      // var txtcolor = $(this).css("color");
+      $(this).css("background-color",newColor);//LightenDarkenColor(bgcolor,+10));
+      // $(this).css("color",LightenDarkenColor(txtcolor,+10));
+      // console.log('lighten bgcolor: '+bgcolor+" --> "+newColor);
+      // console.log('lighten color: '+color+" --> "+LightenDarkenColor(color,+10));
+      $(this).css('cursor','pointer');
+    }
+
+    $('td').hover(highlightcell,unhighlightcell);
+    // $('th[scope="row"]').hover(highlightcell,unhighlightcell);
+  });
+
+
+</script>
+</html>
