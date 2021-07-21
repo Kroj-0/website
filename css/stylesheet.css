@@ -9,6 +9,25 @@ select.dark-select{
 	color: #F5F5F0;
 }
 
+.page-link {
+	background-color: #343a40!important;
+	color: #F5F5F0!important;
+}
+.page-link:hover {
+	background-color: #272822!important;
+	color: #66D9EF!important;
+}
+
+.custom-select,
+.form-control {
+	background-color: #343a40!important;
+	color: #F5F5F0!important;
+}
+
+.anime-name {
+	font-weight: bold;
+}
+
 .comment {
 	color:#75715E; 
 }
