@@ -9,13 +9,21 @@ select.dark-select{
 	color: #F5F5F0;
 }
 
-.page-link {
+.page-item .page-link {
 	background-color: #343a40!important;
 	color: #F5F5F0!important;
 }
-.page-link:hover {
+.page-item .page-link:hover {
 	background-color: #272822!important;
 	color: #66D9EF!important;
+}
+.page-item.active .page-link{
+	background-color: #007bff!important;
+	color: #dddddd!important;
+}
+.page-item.active .page-link:hover {
+	background-color: #0069d9!important;
+	color: #cccccc!important;
 }
 
 .custom-select,
