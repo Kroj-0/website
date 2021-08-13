@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html>
+<head>
+ <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <script src="https://code.jquery.com/jquery-latest.min.js"></script>
+  <script src="https://unpkg.com/survey-jquery@1.8.22/survey.jquery.min.js"></script>
+  <script src="https://use.fontawesome.com/12825f821a.js"></script>
+  <script src="https://kit.fontawesome.com/93028db3a0.js" crossorigin="anonymous"></script>
+  <!-- Data Tables -->
+  <script src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js"></script>
+  <script src="https://cdn.datatables.net/1.10.22/js/dataTables.bootstrap4.min.js"></script>
+
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons"/>
+
+  <!-- BOOTSTRAP Stylesheet -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+  <!-- BOOTSTRAP JS -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
+  <!-- DATATABLES -->
+  <script src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js"></script>
+  <script src="https://cdn.datatables.net/1.10.22/js/dataTables.bootstrap4.min.js"></script>
+
+  <!-- my css -->
+  <link rel="stylesheet" type="text/css" href="../css/stylesheet.css"  />
+
+</head>
+
+<body>
+<main role="main">
+<div class="container">
+
+<!-- <video>
+    <source src="videos/train_adam_0127.mp4" type="video/mp4">
+</video> -->
+<h1>Razze di Grande Chiave</h1>
+
+<!-- <div class="table-responsive"> -->
+  <table class="table table-striped table-bordered table-sort" id="anime-table">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Nome</th>
+        <th scope="col">Descrizione</th>
+        <th scope="col">Link</th>
+      </tr>
+    </thead>
+    <tbody>
+      <!--* Core - 65%-->
+      <tr>
+        <th scope="row"></th>
+        <td class="race-name">Umani</td>
+        <td class="race-description">Umani del mondo reale</td>
+        <td class="race-link"><a href="https://golarion.altervista.org/wiki/Umano">Link</a></td>
+      </tr>
+
+      <tr>
+        <th scope="row"></th>
+        <td class="race-name">Elfi</td>
+        <td class="race-description">Legati a natura e mondo magico</td>
+        <td class="race-link"><a href="https://golarion.altervista.org/wiki/Elfo">Link</a></td>
+      </tr>
+
+      <tr>
+        <th scope="row"></th>
+        <td class="race-name">Nani</td>
+        <td class="race-description">Bassi e legati a rocce e gemme</td>
+        <td class="race-link"><a href="https://golarion.altervista.org/wiki/Nano">Link</a></td>
+      </tr>
+
+      <tr>
+        <th scope="row"></th>
+        <td class="race-name">Halfling</td>
+        <td class="race-description">Hobbit, bassi e legati a commercio</td>
+        <td class="race-link"><a href="https://golarion.altervista.org/wiki/Halfling">Link</a></td>
+      </tr>
+
+      <!--* Common - 15%-->
+      <tr>
+        <th scope="row"></th>
+        <td class="race-name">Mezzorchi</td>
+        <td class="race-description">Misto tra orchi selvaggi ed umani</td>
+        <td class="race-link"><a href="https://golarion.altervista.org/wiki/Mezzorco">Link</a></td>
+      </tr>
+
+      <tr>
+        <th scope="row"></th>
+        <td class="race-name">Mezzelfi</td>
+        <td class="race-description">Misto tra elfi leggiadri ed umani</td>
+        <td class="race-link"><a href="https://golarion.altervista.org/wiki/Mezzelfo">Link</a></td>
+      </tr>
+
+      <tr>
+        <th scope="row"></th>
+        <td class="race-name">Gnomi</td>
+        <td class="race-description">Simili a folletti, molto piccoli e magici</td>
+        <td class="race-link"><a href="https://golarion.altervista.org/wiki/Gnomo">Link</a></td>
+      </tr>
+
+      <!--* Rare - 10% -->
+      <tr>
+        <th scope="row"></th>
+        <td class="race-name">Tiefling</td>
+        <td class="race-description">Mezzidemoni, con fattezze demoniache</td>
+        <td class="race-link"><a href="https://golarion.altervista.org/wiki/Tiefling">Link</a></td>
+      </tr>
+
+      <tr>
+        <th scope="row"></th>
+        <td class="race-name">Aasimar</td>
+        <td class="race-description">Mezziangeli, con fattezze celestiali</td>
+        <td class="race-link"><a href="https://golarion.altervista.org/wiki/Aasimar">Link</a></td>
+      </tr>
+
+      <tr>
+        <th scope="row"></th>
+        <td class="race-name">Samsaran</td>
+        <td class="race-description">Simili ad umani che si rincarnano, sono un po' stralunati</td>
+        <td class="race-link"><a href="https://golarion.altervista.org/wiki/Samsaran">Link</a></td>
+      </tr>
+
+      <tr>
+        <th scope="row"></th>
+        <td class="race-name">Drow</td>
+        <td class="race-description">Elfi oscuri, sotterranei, talvolta corrotti e malvagi</td>
+        <td class="race-link"><a href="https://golarion.altervista.org/wiki/Drow">Link</a></td>
+      </tr>
+
+      <!--* Animal - 5%-->
+      <tr>
+        <th scope="row"></th>
+        <td class="race-name">Felinidi</td>
+        <td class="race-description">Animaleschi con fattezze feline</td>
+        <td class="race-link"><a href="https://golarion.altervista.org/wiki/Razze/Felinide">Link</a></td>
+      </tr>
+
+      <tr>
+        <th scope="row"></th>
+        <td class="race-name">Kitsune</td>
+        <td class="race-description">Animaleschi con fattezze volpine</td>
+        <td class="race-link"><a href="https://golarion.altervista.org/wiki/Razze/Kitsune">Link</a></td>
+      </tr>
+      <!--* Elemental - 3%-->
+      <tr>
+        <th scope="row"></th>
+        <td class="race-name">Oreadi</td>
+        <td class="race-description">Elementali della terra</td>
+        <td class="race-link"><a href="https://golarion.altervista.org/wiki/Razze/Oreade">Link</a></td>
+      </tr>
+
+      <tr>
+        <th scope="row"></th>
+        <td class="race-name">Ondine</td>
+        <td class="race-description">Elementali dell'acqua</td>
+        <td class="race-link"><a href="https://golarion.altervista.org/wiki/Razze/Ondine">Link</a></td>
+      </tr>
+
+      <tr>
+        <th scope="row"></th>
+        <td class="race-name">Silfidi</td>
+        <td class="race-description">Elementali dell'aria</td>
+        <td class="race-link"><a href="https://golarion.altervista.org/wiki/Razze/Silfide">Link</a></td>
+      </tr>
+
+      <tr>
+        <th scope="row"></th>
+        <td class="race-name">Ifrit</td>
+        <td class="race-description">Elementali del fuoco</td>
+        <td class="race-link"><a href="https://golarion.altervista.org/wiki/Razze/Ifrit">Link</a></td>
+      </tr>
+
+      <!--* Monstrous - 1.5%-->
+      <tr>
+        <th scope="row"></th>
+        <td class="race-name">Goblin</td>
+        <td class="race-description">Piccoli, amano coltelli, esplosioni</td>
+        <td class="race-link"><a href="https://golarion.altervista.org/wiki/Razze/Goblin">Link</a></td>
+      </tr>
+
+      <tr>
+        <th scope="row"></th>
+        <td class="race-name">Coboldi</td>
+        <td class="race-description">Piccoli mezzodraghi, sotterranei</td>
+        <td class="race-link"><a href="https://golarion.altervista.org/wiki/Razze/Coboldo">Link</a></td>
+      </tr>
+
+      <!--* Unique - 0.5%-->
+      <tr>
+        <th scope="row"></th>
+        <td class="race-name">Tengu</td>
+        <td class="race-description">Uccelli umanoidi</td>
+        <td class="race-link"><a href="https://golarion.altervista.org/wiki/Razze/Tengu">Link</a></td>
+      </tr>
+
+      <tr>
+        <th scope="row"></th>
+        <td class="race-name">Ghermito</td>
+        <td class="race-description">Umanoide del Piano delle Ombre</td>
+        <td class="race-link"><a href="https://golarion.altervista.org/wiki/Razze/Ghermito">Link</a></td>
+      </tr>
+
+    </tbody>
+
+  </table>
+</div>
+
+</div>
+</main>
+</body>
+<script type="text/javascript">
+  $(document).ready(function() {
+    $('th[scope="row"]').addClass("blue");
+    $('th[scope="col"]').addClass("lightorange");
+
+    $('th[scope="row"]').text(function(index,currentcontent){
+      return JSON.stringify($(this).context._DT_CellIndex.row+1);
+    });
+
+    $('.anime-description').text("Descriptions will be added soon");
+    $('.anime-link').text("Links will be added soon");
+
+
+    function highlightcell(){
+      var bgcolor = $(this).css("background-color");//chiaro);
+      var rgb = bgcolor.slice(4,-1).split(',');
+      var newColor = 'rgb('
+        +(parseInt(rgb[0])+10).toString()+','
+        +(parseInt(rgb[1])+10).toString()+','
+        +(parseInt(rgb[2])+10).toString()+')'
+      // console.log(newColor);
+      // var txtcolor = $(this).css("color");
+      $(this).css("background-color",newColor);//LightenDarkenColor(bgcolor,+10));
+      // $(this).css("color",LightenDarkenColor(txtcolor,+10));
+      // console.log('lighten bgcolor: '+bgcolor+" --> "+newColor);
+      // console.log('lighten color: '+color+" --> "+LightenDarkenColor(color,+10));
+      $(this).css('cursor','pointer');
+    }
+
+    function unhighlightcell(){
+      var bgcolor = $(this).css("background-color");//chiaro);
+      var rgb = bgcolor.slice(4,-1).split(',');
+      var newColor = 'rgb('
+        +(parseInt(rgb[0])-10).toString()+','
+        +(parseInt(rgb[1])-10).toString()+','
+        +(parseInt(rgb[2])-10).toString()+')'
+      // console.log(newColor);
+      // var txtcolor = $(this).css("color");
+      $(this).css("background-color",newColor);//LightenDarkenColor(bgcolor,+10));
+      // $(this).css("color",LightenDarkenColor(txtcolor,+10));
+      // console.log('lighten bgcolor: '+bgcolor+" --> "+newColor);
+      // console.log('lighten color: '+color+" --> "+LightenDarkenColor(color,+10));
+      $(this).css('cursor','pointer');
+    }
+
+    $('td').hover(highlightcell,unhighlightcell);
+    $('th[scope="row"]').hover(highlightcell,unhighlightcell);
+  });
+</script>
+ <script type="module">
+  $('.table-sort').DataTable(
+    {
+      responsive: true,
+      autoFill: true,
+      pageLength: 50,
+      "language": {
+        "url": "https://cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/English.json"
+      },
+    }
+  );
+  </script>
+</html>
