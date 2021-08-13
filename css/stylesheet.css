@@ -9,6 +9,22 @@ select.dark-select{
 	color: #F5F5F0;
 }
 
+a {
+	font-weight: bold;
+	color:#AE81FF;
+}
+
+p {
+  text-align: justify;
+  text-justify: inter-word;
+  text-indent: 20px;
+  margin-bottom: .5rem;
+}
+
+.container{
+	margin-bottom:2rem;
+}
+
 .page-item .page-link {
 	background-color: #343a40!important;
 	color: #F5F5F0!important;
@@ -34,10 +50,6 @@ select.dark-select{
 
 .anime-name {
 	font-weight: bold;
-}
-
-a {
-	color:#AE81FF;
 }
 
 .comment {
