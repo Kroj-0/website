@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html>
+<head>
+ <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <script src="https://code.jquery.com/jquery-latest.min.js"></script>
+  <script src="https://unpkg.com/survey-jquery@1.8.22/survey.jquery.min.js"></script>
+  <script src="https://use.fontawesome.com/12825f821a.js"></script>
+  <script src="https://kit.fontawesome.com/93028db3a0.js" crossorigin="anonymous"></script>
+  <!-- Data Tables -->
+  <script src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js"></script>
+  <script src="https://cdn.datatables.net/1.10.22/js/dataTables.bootstrap4.min.js"></script>
+
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons"/>
+
+  <!-- BOOTSTRAP Stylesheet -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+  <!-- BOOTSTRAP JS -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
+  <!-- DATATABLES -->
+  <script src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js"></script>
+  <script src="https://cdn.datatables.net/1.10.22/js/dataTables.bootstrap4.min.js"></script>
+
+  <!-- my css -->
+  <link rel="stylesheet" type="text/css" href="../../css/stylesheet.css"  />
+
+</head>
+
+<body>
+<main role="main">
+<div class="container">
+
+<!-- <video>
+    <source src="videos/train_adam_0127.mp4" type="video/mp4">
+</video> -->
+<h1>Gilde di Grande Chiave</h1>
+
+<!-- <div class="table-responsive"> -->
+  <table class="table table-striped table-bordered" id="guild-table">
+    <thead>
+      <tr>
+        <th scope="col">Nome</th>
+        <th scope="col">Allineamento</th>
+        <th scope="col">Colore</th>
+        <th scope="col">Valori</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <th class="guild-name" scope="row">Senato di Alfor</td>
+        <td class="guild-alignment">LB</td>
+        <td class="guild-color">Bianco</td>
+        <td class="guild-values">regole, legge, ordine, educazione, gestione, pace</td>
+      </tr>
+      <tr>
+        <th class="guild-name" scope="row">Sindacato di Batov</td>
+        <td class="guild-alignment">LB</td>
+        <td class="guild-color">Azzurro</td>
+        <td class="guild-values">ambizione, merito, avanzamento, potere</td>
+      </tr>
+      <tr>
+        <th class="guild-name" scope="row">Legione di Thoros</td>
+        <td class="guild-alignment">LN</td>
+        <td class="guild-color">Rosso</td>
+        <td class="guild-values">coraggio, tenacia, battaglieri, intensi, uniti</td>
+      </tr>
+      <tr>
+        <th class="guild-name" scope="row">Culto di Omegos</td>
+        <td class="guild-alignment">LM</td>
+        <td class="guild-color">Marrone</td>
+        <td class="guild-values">pessimisti, preparazione apocalisse, timorosi verso tutto, diffidenti</td>
+      </tr>
+      <tr>
+        <th class="guild-name" scope="row">Casa di Gamir</td>
+        <td class="guild-alignment">NB</td>
+        <td class="guild-color">Rosa</td>
+        <td class="guild-values">ospitalità, accoglienza, rispetto, tolleranti</td>
+      </tr>
+      <tr>
+        <th class="guild-name" scope="row">Schiera di Zegtari</td>
+        <td class="guild-alignment">NN</td>
+        <td class="guild-color">Nero</td>
+        <td class="guild-values">coltivatori, lavoratori, produttori, dediti con poche remore</td>
+      </tr>
+      <tr>
+        <th class="guild-name" scope="row">Alleanza di Ximic</td>
+        <td class="guild-alignment">NM</td>
+        <td class="guild-color">Giallo</td>
+        <td class="guild-values">ricchezza, subdoli, manipolatori, ingannatori</td>
+      </tr>
+      <tr>
+        <th class="guild-name" scope="row">Conclave di Epsenia</td>
+        <td class="guild-alignment">CB</td>
+        <td class="guild-color">Verde</td>
+        <td class="guild-values">armonia nel mondo, unità della città, grande gruppo</td>
+      </tr>
+      <tr>
+        <th class="guild-name" scope="row">Lega di Delzet</td>
+        <td class="guild-alignment">CN</td>
+        <td class="guild-color">Blu</td>
+        <td class="guild-values">intelligenza, ricerca, progresso, scienza, tecnologia, sperimentazione</td>
+      </tr>
+      <tr>
+        <th class="guild-name" scope="row">Clan di Etuur</td>
+        <td class="guild-alignment">CM</td>
+        <td class="guild-color">Viola</td>
+        <td class="guild-values">poco dediti alle regole, pronti a sciacallare, visione travisata della proprietà</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h3>Ambiente cittadino e popolazione principale</h3>
+  <table class="table table-striped table-bordered" id="guild-table">
+    <thead>
+      <tr>
+        <th scope="col">Nome</th>
+        <th scope="col">Stile</th>
+        <th scope="col">Descrizione</th>
+        <th scope="col">Razze</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <th class="guild-shortname" scope="row">Senato</td>
+        <td class="guild-style">Romano</td>
+        <td class="guild-builddescription">case ordinate, palazzi, fontane, vie pulite, brava gente</td>
+        <td class="guild-races">umani, elfi, aasimar</td>
+      </tr>
+      <tr>
+        <th class="guild-shortname" scope="row">Sindacato</td>
+        <td class="guild-style">Medievale ricca</td>
+        <td class="guild-builddescription">case sfarzose, non molto coerenti, cancelli e giardini, palazzi</td>
+        <td class="guild-races">umani, halfling, mezzelfi</td>
+      </tr>
+      <tr>
+        <th class="guild-shortname" scope="row">Legione</td>
+        <td class="guild-style">Accampamento Romano</td>
+        <td class="guild-builddescription">schemi efficaci, molte guardie, campi di allenamento e addestramento, fucine</td>
+        <td class="guild-races">umani, nani, mezzorchi, nagaji</td>
+      </tr>
+      <tr>
+        <th class="guild-shortname" scope="row">Culto</td>
+        <td class="guild-style">Dedalo Nanici</td>
+        <td class="guild-builddescription">sotterranei, gente e creature strane, zone desolate e disabitate</td>
+        <td class="guild-races">nani, tiefling, rattoidi  </td>
+      </tr>
+      <tr>
+        <th class="guild-shortname" scope="row">Casa</td>
+        <td class="guild-style">Semplici piccole case</td>
+        <td class="guild-builddescription">zone non molto ricche ma gente amichevole, accogliente</td>
+        <td class="guild-races">umani, felinidi, gnomi</td>
+      </tr>
+      <tr>
+        <th class="guild-shortname" scope="row">Schiera</td>
+        <td class="guild-style">Gotico</td>
+        <td class="guild-builddescription">laboratori, negozi, artigiani, molti chierici e templi</td>
+        <td class="guild-races">umani, nani, drow</td>
+      </tr>
+      <tr>
+        <th class="guild-shortname" scope="row">Alleanza</td>
+        <td class="guild-style">Medievale-Piratesca</td>
+        <td class="guild-builddescription">palazzi e ricchezza, artigiani e mercati, casino</td>
+        <td class="guild-races">umani, halfling, tiefling</td>
+      </tr>
+      <tr>
+        <th class="guild-shortname" scope="row">Conclave</td>
+        <td class="guild-style">Elfico/Foresta</td>
+        <td class="guild-builddescription">zone verdi, natura fusa con la città, mercati</td>
+        <td class="guild-races">elfi, gnomi, samsaran </td>
+      </tr>
+      <tr>
+        <th class="guild-shortname" scope="row">Lega</td>
+        <td class="guild-style">Jappo-Orientale</td>
+        <td class="guild-builddescription">laboratori/artigiani, scuole, negozi, mercati</td>
+        <td class="guild-races">umani, halfling, nani, kitsune</td>
+      </tr>
+      <tr>
+        <th class="guild-shortname" scope="row">Clan</td>
+        <td class="guild-style">Periferia di provincia</td>
+        <td class="guild-builddescription">pericolo, case e palazzi malmessi, criminalità, nessuna guardia</td>
+        <td class="guild-races">no elfi, no nani</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h3>Altre informazioni</h3>
+  <table class="table table-striped table-bordered" id="guild-table">
+    <thead>
+      <tr>
+        <th scope="col">Nome</th>
+        <th scope="col">Leader</th>
+        <th scope="col">Motto</th>
+        <th scope="col">Stemma</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <th class="guild-shortname" scope="row">Senato</td>
+        <td class="guild-leader">Calanell e senato</td>
+        <td class="guild-motto">seguiamo la via maestra, la luce nell'oscurità</td>
+        <td class="guild-banner">Freccia verso l'alto, sopra la punta dei raggi</td>
+      </tr>
+      <tr>
+        <th class="guild-shortname" scope="row">Sindacato</td>
+        <td class="guild-leader">Jeremigad Tiborsson</td>
+        <td class="guild-motto">la parola è sacra</td>
+        <td class="guild-banner">Due mani che si stringono</td>
+      </tr>
+      <tr>
+        <th class="guild-shortname" scope="row">Legione</td>
+        <td class="guild-leader">Kreg</td>
+        <td class="guild-motto">per l'acciaio e per il sangue</td>
+        <td class="guild-banner">Elmo sorretto da un'ascia</td>
+      </tr>
+      <tr>
+        <th class="guild-shortname" scope="row">Culto</td>
+        <td class="guild-leader">Virinskaya</td>
+        <td class="guild-motto">l'alba mostrerà la fine</td>
+        <td class="guild-banner">Labirinto visto dall'alto</td>
+      </tr>
+      <tr>
+        <th class="guild-shortname" scope="row">Casa</td>
+        <td class="guild-leader">Jun Quill</td>
+        <td class="guild-motto">famiglia, casa, rispetto</td>
+        <td class="guild-banner">Casa su una nuvol</td>
+      </tr>
+      <tr>
+        <th class="guild-shortname" scope="row">Schiera</td>
+        <td class="guild-leader">Gebromir Renethil </td>
+        <td class="guild-motto">una vita è presa, ma un'altra vita cresce</td>
+        <td class="guild-banner">Spiga in primo piano, un campo in sfondo</td>
+      </tr>
+      <tr>
+        <th class="guild-shortname" scope="row">Alleanza</td>
+        <td class="guild-leader">Dinkair Rizih</td>
+        <td class="guild-motto">l'oro conquistato è più prezioso di ogni altro</td>
+        <td class="guild-banner">Medaglione dorato con una faccia</td>
+      </tr>
+      <tr>
+        <th class="guild-shortname" scope="row">Conclave</td>
+        <td class="guild-leader">Yevareszka</td>
+        <td class="guild-motto">armonia e bellezza</td>
+        <td class="guild-banner">Albero maestoso</td>
+      </tr>
+      <tr>
+        <th class="guild-shortname" scope="row">Lega</td>
+        <td class="guild-leader">Zennyo Ryuo </td>
+        <td class="guild-motto">la conoscenza per la vita, la mia vita per la conoscenza</td>
+        <td class="guild-banner">Due ingranaggi</td>
+      </tr>
+      <tr>
+        <th class="guild-shortname" scope="row">Clan</td>
+        <td class="guild-leader">Meegra</td>
+        <td class="guild-motto">ciò che oggi è perso possa un domani ritornare</td>
+        <td class="guild-banner">Recipiente d'acqua fiammeggiante</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+</div>
+</main>
+</body>
+<script type="text/javascript">
+  $(document).ready(function() {
+    $('th[scope="row"]').addClass("blue");
+    $('th[scope="col"]').addClass("lightorange");
+
+    $('th[scope="row"]').text(function(index,currentcontent){
+      return JSON.stringify($(this).context._DT_CellIndex.row+1);
+    });
+
+    $('th[scope="row"]').addClass("blue");
+    $('th[scope="col"]').addClass("lightorange");
+
+
+    function highlightcell(){
+      var bgcolor = $(this).css("background-color");//chiaro);
+      var rgb = bgcolor.slice(4,-1).split(',');
+      var newColor = 'rgb('
+        +(parseInt(rgb[0])+10).toString()+','
+        +(parseInt(rgb[1])+10).toString()+','
+        +(parseInt(rgb[2])+10).toString()+')'
+      // console.log(newColor);
+      // var txtcolor = $(this).css("color");
+      $(this).css("background-color",newColor);//LightenDarkenColor(bgcolor,+10));
+      // $(this).css("color",LightenDarkenColor(txtcolor,+10));
+      // console.log('lighten bgcolor: '+bgcolor+" --> "+newColor);
+      // console.log('lighten color: '+color+" --> "+LightenDarkenColor(color,+10));
+      $(this).css('cursor','pointer');
+    }
+
+    function unhighlightcell(){
+      var bgcolor = $(this).css("background-color");//chiaro);
+      var rgb = bgcolor.slice(4,-1).split(',');
+      var newColor = 'rgb('
+        +(parseInt(rgb[0])-10).toString()+','
+        +(parseInt(rgb[1])-10).toString()+','
+        +(parseInt(rgb[2])-10).toString()+')'
+      // console.log(newColor);
+      // var txtcolor = $(this).css("color");
+      $(this).css("background-color",newColor);//LightenDarkenColor(bgcolor,+10));
+      // $(this).css("color",LightenDarkenColor(txtcolor,+10));
+      // console.log('lighten bgcolor: '+bgcolor+" --> "+newColor);
+      // console.log('lighten color: '+color+" --> "+LightenDarkenColor(color,+10));
+      $(this).css('cursor','pointer');
+    }
+
+    $('td').hover(highlightcell,unhighlightcell);
+    $('th[scope="row"]').hover(highlightcell,unhighlightcell);
+  });
+</script>
+ <script type="module">
+  $('.table-sort').DataTable(
+    {
+      responsive: true,
+      autoFill: true,
+      pageLength: 50,
+      "language": {
+        "url": "https://cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/English.json"
+      },
+    }
+  );
+  </script>
+</html>
