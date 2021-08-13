@@ -13,6 +13,9 @@ a {
 	font-weight: bold;
 	color:#AE81FF;
 }
+a:hover {
+	color:#ba7cf7;;
+}
 
 p {
   text-align: justify;
@@ -75,4 +78,7 @@ p {
 }
 .purple {
 	color:#AE81FF; 
+}
+.lightpurple{
+	color:#ba7cf7;
 }
