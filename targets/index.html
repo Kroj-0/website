@@ -134,15 +134,15 @@
                 <tr>
                     <th scope="row"></th>
                     <td style="padding-left: 30px;">Follow-up Customers OpenAI-GPT</td>
-                    <td class="text-center"><span class="badge badge-danger">Not Started</span></td>
-                    <td class="text-center" >1000</td>
+                    <td class="text-center"><span id="task-3-1-status" class="badge badge-danger">Not Started</span></td>
+                    <td class="text-center" id="task-3-1-bonus"></td>
                     <td class="text-center" >1000</td>
                 </tr>
                 <tr>
                     <th scope="row"></th>
                     <td style="padding-left: 30px;">Sales OpenAI-GPT</td>
-                    <td class="text-center"><span class="badge badge-danger">Not Started</span></td>
-                    <td class="text-center" >1000</td>
+                    <td class="text-center"><span id="task-3-2-status" class="badge badge-danger">Not Started</span></td>
+                    <td class="text-center" id="task-3-2-bonus"></td>
                     <td class="text-center" >1000</td>
                 </tr>
                 </tbody>
@@ -163,8 +163,8 @@
                 </thead>
                 <tbody>
                 <tr>
-                    <td class="text-center"><input id="task-1-total-slider" class="slider task-1-slider" type="text" data-slider-min="0" data-slider-max="20" data-slider-step="1" data-slider-ticks="[0, 20]" data-slider-value="6" style="width: 80%;"></td>
-                    <td class="text-center"><input id="task-1-bu-slider" class="slider task-1-slider" type="text" data-slider-min="0" data-slider-max="5" data-slider-step="1" data-slider-ticks="[0, 5]" data-slider-value="1" style="width: 80%;"></td>
+                    <td class="text-center"><input id="task-1-total-slider" class="slider task-1-slider" type="text" data-slider-min="0" data-slider-max="20" data-slider-step="1" data-slider-ticks="[0, 20]" data-slider-value="7" style="width: 80%;"></td>
+                    <td class="text-center"><input id="task-1-bu-slider" class="slider task-1-slider" type="text" data-slider-min="0" data-slider-max="5" data-slider-step="1" data-slider-ticks="[0, 5]" data-slider-value="0" style="width: 80%;"></td>
                     <td class="text-center"><span id="task-1-completed" class="badge badge-danger">Not Started</span></td>
                 </tr>
                 </tbody>
@@ -202,6 +202,109 @@
                 </tr>
                 </thead>
                 <tbody>
+                    <tr>
+                        <th scope="row">1</th>
+                        <td>Conference speech (events, XChange)</td>
+                        <td>50</td>
+                        <td class="text-center">
+                            <input id="subtask-1-slider" class="slider subtask-slider" type="text" data-slider-min="0" data-slider-max="5" data-slider-step="1" data-slider-ticks="[0, 5]" data-slider-value="1" style="width: 80%;">
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row">2</th>
+                        <td>Webinar</td>
+                        <td>50</td>
+                        <td class="text-center">
+                            <input id="subtask-2-slider" class="slider subtask-slider" type="text" data-slider-min="0" data-slider-max="3" data-slider-step="1" data-slider-ticks="[0, 3]" data-slider-value="1" style="width: 80%;">
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row">3</th>
+                        <td>Editorial activity</td>
+                        <td>40</td>
+                        <td class="text-center"><input class="subtask-checkbox" type="checkbox"  style="transform: scale(1.5);"></td>
+                    </tr>
+                    <tr>
+                        <th scope="row">4</th>
+                        <td>Carousel LinkedIn</td>
+                        <td>20</td>
+                        <td class="text-center">
+                            <input id="subtask-4-slider" class="slider subtask-slider" type="text" data-slider-min="0" data-slider-max="5" data-slider-step="1" data-slider-ticks="[0, 5]" data-slider-value="1" style="width: 80%;">
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row">5</th>
+                        <td>Medium Tech Blog Article</td>
+                        <td>30</td>
+                        <td class="text-center"><input id="subtask-5-slider" class="slider subtask-slider" type="text" data-slider-min="0" data-slider-max="3" data-slider-step="1" data-slider-ticks="[0, 3]" data-slider-value="0" style="width: 80%;"></td>
+                    </tr>
+                    <tr>
+                        <th scope="row">5</th>
+                        <td>Use case on website</td>
+                        <td>30</td>
+                        <td class="text-center"><input class="subtask-checkbox" type="checkbox"  style="transform: scale(1.5);"></td>
+                    </tr>
+                    <tr>
+                        <th scope="row">6</th>
+                        <td>Demo (eg. MegaCUBO)</td>
+                        <td>60</td>
+                        <td class="text-center"><input class="subtask-checkbox" type="checkbox"  checked style="transform: scale(1.5);"></td>
+                    </tr>
+                    <tr>
+                        <th scope="row">7</th>
+                        <td>Labcamp Reply</td>
+                        <td>40</td>
+                        <td class="text-center"><input id="subtask-7-slider" class="slider subtask-slider" type="text" data-slider-min="0" data-slider-max="3" data-slider-step="1" data-slider-ticks="[0, 3]" data-slider-value="0" style="width: 80%;"></td>
+                    </tr>
+                    <tr>
+                        <th scope="row">8</th>
+                        <td>ROSE Card</td>
+                        <td>20</td>
+                        <td class="text-center"><input class="subtask-checkbox" type="checkbox" style="transform: scale(1.5);"></td>
+                    </tr>
+                    <tr>
+                        <th scope="row">9</th>
+                        <td>LinkedIn Visibility</td>
+                        <td>60</td>
+                        <td class="text-center"><input class="subtask-checkbox" type="checkbox" style="transform: scale(1.5);"></td>
+                    </tr>
+                    <tr>
+                        <th scope="row">10</th>
+                        <td>Whitepaper</td>
+                        <td>50</td>
+                        <td class="text-center"><input class="subtask-checkbox" type="checkbox" style="transform: scale(1.5);"></td>
+                    </tr>
+                    <tr>
+                        <th scope="row">11</th>
+                        <td>Multiclient Workshop</td>
+                        <td>60</td>
+                        <td class="text-center"><input class="subtask-checkbox" type="checkbox" style="transform: scale(1.5);"></td>
+                    </tr>
+                    <tr>
+                        <th scope="row">12</th>
+                        <td>Blog External Vendor</td>
+                        <td>50</td>
+                        <td class="text-center"><input class="subtask-checkbox" type="checkbox" style="transform: scale(1.5);"></td>
+                    </tr>
+                    <tr>
+                        <th scope="row">13</th>
+                        <td>Accelerator External Vendor</td>
+                        <td>50</td>
+                        <td class="text-center"><input class="subtask-checkbox" type="checkbox" style="transform: scale(1.5);"></td>
+                    </tr>
+                    <tr>
+                        <th scope="row">14</th>
+                        <td>Marketplace External Vendor</td>
+                        <td>30</td>
+                        <td class="text-center"><input class="subtask-checkbox" type="checkbox" style="transform: scale(1.5);"></td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Total</th>
+                        <td></td>
+                        <td id="total-score"></td>
+                        <td class="text-center"><span id="task-3-completed" class="badge badge-danger">Not Started</span></td>
+                    </tr> 
+                <!-- 
                 <tr>
                     <th scope="row">1</th>
                     <td>Reply Rose Post</td>
@@ -242,9 +345,46 @@
                 </tr>
                 <tr>
                     <th scope="row">Total</th>
-                    <td></td>
+                    <td></td>n
                     <td id="total-score"></td>
                     <td class="text-center"><span id="task-3-completed" class="badge badge-danger">Not Started</span></td>
+                </tr> -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="row mt-5">
+        <div class="col-md-6">
+            <h3>Follow-up Customers OpenAI-GPT</h3>
+            <table class="table table-dark table-striped mt-3">
+                <thead>
+                <tr>
+                    <th class="text-center col-sm-3" scope="col">Number</th>
+                    <th class="text-center col-sm-1" scope="col">Completed</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td class="text-center"><input id="task-3-1-number-slider" class="slider task-3-1-slider" type="text" data-slider-min="0" data-slider-max="3" data-slider-step="1" data-slider-ticks="[0, 1, 2, 3]" data-slider-value="0" style="width: 80%;"></td>
+                    <td class="text-center"><span id="task-3-1-completed" class="badge badge-danger">Not Started</span></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="col-md-6">
+            <h3>Sales OpenAI-GPT</h3>
+            <table class="table table-dark table-striped mt-3">
+                <thead>
+                <tr>
+                    <th class="text-center col-sm-3" scope="col">Project Started</th>
+                    <th class="text-center col-sm-1" scope="col">Completed</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td class="text-center"><input class="task-3-2-checkbox" type="checkbox" style="transform: scale(1.5);"></td>
+                    <td class="text-center"><span id="task-3-2-completed" class="badge badge-danger">Not Started</span></td>
                 </tr>
                 </tbody>
             </table>
@@ -373,10 +513,49 @@
             $("#total-score").text(totalScore+" / 200");
         }
 
+        // task-3-1-number-slider
+        // task-3-1-completed
+        // task-3-2-checkbox
+        // task-3-2-completed
+
+
+        function updateTask31Status() {
+            
+            const numberSliderValue = $("#task-3-1-number-slider").slider("getValue");
+
+            if (numberSliderValue === 3) {
+                $("#task-3-1-status").text("Completed").removeClass("badge-danger badge-warning").addClass("badge-success");
+                $("#task-3-1-completed").text("Completed").removeClass("badge-danger badge-warning").addClass("badge-success");
+                $("#task-3-1-bonus").text(1000);
+            } else if (numberSliderValue > 0) {
+                $("#task-3-1-status").text("In Progress").removeClass("badge-danger badge-success").addClass("badge-warning");
+                $("#task-3-1-completed").text("In Progress").removeClass("badge-danger badge-success").addClass("badge-warning");
+                $("#task-3-1-bonus").text(0);
+            } else {
+                $("#task-3-1-status").text("Not Started").removeClass("badge-warning badge-success").addClass("badge-danger");
+                $("#task-3-1-completed").text("Not Started").removeClass("badge-warning badge-success").addClass("badge-danger");
+                $("#task-3-1-bonus").text(0);
+            }
+        }
+
+        function updateTask32Status() {
+            const done = $("#task-3-2-checkbox").is(":checked");
+
+            if (done) {
+                $("#task-3-2-status").text("Completed").removeClass("badge-danger badge-warning").addClass("badge-success");
+                $("#task-3-2-bonus").text(1000);
+            } else {
+                $("#task-3-2-status").text("Not Started").removeClass("badge-warning badge-success").addClass("badge-danger");
+                $("#task-3-2-bonus").text(0);
+            }
+        }
+
         function updateTaskStatuses() {
             updateTask1Status();
             updateTask2Status();
             updateTask3Status();
+            updateTask31Status();
+            updateTask32Status();
         }
 
         function updateBonusProgress() {
