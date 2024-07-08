@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html>
+<head>
+ <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <script src="https://code.jquery.com/jquery-latest.min.js"></script>
+  <script src="https://unpkg.com/survey-jquery@1.8.22/survey.jquery.min.js"></script>
+  <script src="https://use.fontawesome.com/12825f821a.js"></script>
+  <script src="https://kit.fontawesome.com/93028db3a0.js" crossorigin="anonymous"></script>
+  <!-- Data Tables -->
+  <script src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js"></script>
+  <script src="https://cdn.datatables.net/1.10.22/js/dataTables.bootstrap4.min.js"></script>
+
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons"/>
+
+  <!-- BOOTSTRAP Stylesheet -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+  <!-- BOOTSTRAP JS -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
+  <!-- my css -->
+  <link rel="stylesheet" type="text/css" href="../css/stylesheet.css"  />
+
+</head>
+
+<body>
+<main role="main">
+<div class="container">
+
+<!-- <video>
+    <source src="videos/train_adam_0127.mp4" type="video/mp4">
+</video> -->
+<h1>Wishlist</h1>
+
+<div class="mt-3">
+  La maggior parte dei prodotti, se siete così gentili da prenderli, dovrebbero essere presi esattamente come sono.<br/>
+  Se c'è spazio per variazioni, o per qualunque altra cosa rilevante in merito ai prodotti, scrivo nelle Note.
+</div>
+<div class="mt-2 mb-3">
+  <div class="red mr-2 d-inline">ATTENZIONE</div>Se si preme <div class="green d-inline">Richiedere</div>, non è possibile annullare l'assegnazione se non contattandomi direttamente.
+</div>
+
+<table class="table table-striped table-bordered table-sort" id="wishlist-table">
+  <thead>
+    <tr>
+      <th scope="col" width="3%">#</th>
+      <th scope="col" width="27%">Prodotto</th>
+      <th scope="col" width="45%">Note</th>
+      <th scope="col" width="18%">Link</th>
+      <th scope="col" width="17%"></th>
+    </tr>
+  </thead>
+  
+  <tbody>
+    <!-- Data will be populated here -->
+  </tbody>
+</table>
+
+
+</div>
+</main>
+</body>
+<script type="text/javascript">
+  const sheetUrl = 'https://script.google.com/macros/s/AKfycbxsHqBDegyrUGJmozFRvfBtzlbekB0TVU5bYLzFgDhW3Ghj1z6DNBk0ELQ5n9PJyb8BkA/exec';
+
+  async function fetchWishlist() {
+    const response = await fetch(sheetUrl);
+    const data = await response.json();
+    return data;
+  }
+
+  function createTable(data) {
+    const tableBody = document.getElementById('wishlist-table').querySelector('tbody');
+    tableBody.innerHTML = ''; // Clear existing rows
+
+    // console.log(data)
+
+    data.forEach((item,index) => {
+      const row = document.createElement('tr');
+
+      const headerCell = document.createElement('th');
+      headerCell.scope = 'row';
+      headerCell.textContent = index + 1; // Add a sequential number for each row
+      row.appendChild(headerCell);
+
+      const productCell = document.createElement('td');
+      productCell.textContent = item.product;
+      row.appendChild(productCell);
+
+      const noteCell = document.createElement('td');
+      noteCell.textContent = item.note;
+      row.appendChild(noteCell);
+
+      const websiteCell = document.createElement('td');
+      const link = document.createElement('a');
+      link.href = item.url;
+      link.textContent = item.website;
+      websiteCell.appendChild(link);
+      row.appendChild(websiteCell);
+
+      const actionCell = document.createElement('td');
+      actionCell.style.textAlign = 'center';
+      if(item.claimed){
+        actionCell.textContent = 'Assegnato'
+        actionCell.classList.add('comment')
+      }
+      else{
+        actionCell.textContent = 'Richiedere'
+        actionCell.classList.add('green')
+      }
+      actionCell.onclick = async () => {
+        actionCell.textContent = 'Attendi...';
+        actionCell.classList.remove('green')
+        actionCell.classList.add('lightorange')
+        await claimProduct(item.id);
+      }
+      row.appendChild(actionCell);
+
+      tableBody.appendChild(row);
+    });
+  }
+
+  async function claimProduct(id) {
+    const response = await fetch(sheetUrl, {
+      method: 'POST',
+      mode: 'no-cors',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ id })
+    });
+
+    if (response.ok) {
+      alert('Product claimed successfully!');
+      // Refresh the table
+      loadWishlist();
+    } else {
+      console.log('There was an error claiming the product.');
+      loadWishlist();
+    }
+  }
+
+  async function loadWishlist() {
+    const data = await fetchWishlist();
+    createTable(data);
+    loadGraphics();
+  }
+
+  document.addEventListener('DOMContentLoaded', loadWishlist);
+
+  function highlightcell(){
+    var bgcolor = $(this).css("background-color");//chiaro);
+    var rgb = bgcolor.slice(4,-1).split(',');
+    var newColor = 'rgb('
+      +(parseInt(rgb[0])+10).toString()+','
+      +(parseInt(rgb[1])+10).toString()+','
+      +(parseInt(rgb[2])+10).toString()+')'
+    // console.log(newColor);
+    // var txtcolor = $(this).css("color");
+    $(this).css("background-color",newColor);//LightenDarkenColor(bgcolor,+10));
+    // $(this).css("color",LightenDarkenColor(txtcolor,+10));
+    // console.log('lighten bgcolor: '+bgcolor+" --> "+newColor);
+    // console.log('lighten color: '+color+" --> "+LightenDarkenColor(color,+10));
+    $(this).css('cursor','pointer');
+  }
+
+  function unhighlightcell(){
+    var bgcolor = $(this).css("background-color");//chiaro);
+    var rgb = bgcolor.slice(4,-1).split(',');
+    var newColor = 'rgb('
+      +(parseInt(rgb[0])-10).toString()+','
+      +(parseInt(rgb[1])-10).toString()+','
+      +(parseInt(rgb[2])-10).toString()+')'
+    // console.log(newColor);
+    // var txtcolor = $(this).css("color");
+    $(this).css("background-color",newColor);//LightenDarkenColor(bgcolor,+10));
+    // $(this).css("color",LightenDarkenColor(txtcolor,+10));
+    // console.log('lighten bgcolor: '+bgcolor+" --> "+newColor);
+    // console.log('lighten color: '+color+" --> "+LightenDarkenColor(color,+10));
+    $(this).css('cursor','pointer');
+  }
+
+  function loadGraphics(){
+    $('th[scope="row"]').addClass("blue");
+    $('th[scope="col"]').addClass("lightorange");
+    $('td').hover(highlightcell,unhighlightcell);
+    $('th[scope="row"]').hover(highlightcell,unhighlightcell);
+    }
+  
+  $(document).ready(function() {
+    loadGraphics()
+  })
+
+</script>
+<!-- <script type="module">
+  $('.table-sort').DataTable(
+    {
+      responsive: true,
+      autoFill: true,
+      "language": {
+        "url": "https://cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/English.json"
+      },
+    }
+  );
+  </script> -->
+</html>
