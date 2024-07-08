@@ -39,17 +39,18 @@
   Se c'è spazio per variazioni, o per qualunque altra cosa rilevante in merito ai prodotti, scrivo nelle Note.
 </div>
 <div class="mt-2 mb-3">
-  <div class="red mr-2 d-inline">ATTENZIONE</div>Se si preme <div class="green d-inline">Richiedere</div>, non è possibile annullare l'assegnazione se non contattandomi direttamente.
+  <div class="red mr-2 d-inline font-weight-bold">ATTENZIONE</div>Se si preme <div class="green d-inline font-weight-bold">Richiedere</div>, non è possibile annullare l'assegnazione se non contattandomi direttamente.
 </div>
 
 <table class="table table-striped table-bordered table-sort" id="wishlist-table">
   <thead>
     <tr>
-      <th scope="col" width="3%">#</th>
-      <th scope="col" width="27%">Prodotto</th>
-      <th scope="col" width="45%">Note</th>
-      <th scope="col" width="18%">Link</th>
-      <th scope="col" width="17%"></th>
+      <th scope="col" width="2%">#</th>
+      <th scope="col" width="11%">Img</th>
+      <th scope="col" width="20%">Prodotto</th>
+      <th scope="col" width="40%">Note</th>
+      <th scope="col" width="12%">Link</th>
+      <th scope="col" width="15%"></th>
     </tr>
   </thead>
   
@@ -79,21 +80,37 @@
 
     data.forEach((item,index) => {
       const row = document.createElement('tr');
+      row.style.height = '6vw';
 
       const headerCell = document.createElement('th');
       headerCell.scope = 'row';
       headerCell.textContent = index + 1; // Add a sequential number for each row
       row.appendChild(headerCell);
 
+      // Image cell
+      const imageCell = document.createElement('td');
+      imageCell.style.textAlign = 'center';
+      imageCell.style.width = '11%'; // Set column width for image
+      imageCell.style.position = 'relative'; // Ensure image container respects aspect ratio
+      imageCell.style.backgroundImage = `url('${item.img}')`; // Replace with the path to your image
+      imageCell.style.backgroundSize = 'contain'; // Optional: Adjust the background size
+      imageCell.style.backgroundRepeat = 'no-repeat';
+      imageCell.style.backgroundPosition = 'center';
+      row.appendChild(imageCell);
+
       const productCell = document.createElement('td');
+      productCell.style.verticalAlign = "middle"
       productCell.textContent = item.product;
       row.appendChild(productCell);
 
       const noteCell = document.createElement('td');
+      noteCell.style.verticalAlign = "middle"
       noteCell.textContent = item.note;
       row.appendChild(noteCell);
 
       const websiteCell = document.createElement('td');
+      websiteCell.style.verticalAlign = "middle"
+      websiteCell.style.textAlign = 'center';
       const link = document.createElement('a');
       link.href = item.url;
       link.textContent = item.website;
@@ -101,7 +118,10 @@
       row.appendChild(websiteCell);
 
       const actionCell = document.createElement('td');
+      actionCell.style.verticalAlign = "middle"
       actionCell.style.textAlign = 'center';
+      actionCell.classList.add("hover-underline")
+      actionCell.classList.add("font-weight-bold")
       if(item.claimed){
         actionCell.textContent = 'Assegnato'
         actionCell.classList.add('comment')

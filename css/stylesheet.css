@@ -45,6 +45,10 @@ p {
 	color: #cccccc!important;
 }
 
+.hover-underline:hover {
+	text-decoration: underline;
+}
+
 .custom-select,
 .form-control {
 	background-color: #343a40!important;
