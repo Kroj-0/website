@@ -39,9 +39,10 @@
   Se c'è spazio per variazioni, o per qualunque altra cosa rilevante in merito ai prodotti, scrivo nelle Note.
 </div>
 <div class="mt-2 mb-3">
-  <div class="red mr-2 d-inline font-weight-bold">ATTENZIONE</div>Se si preme <div class="green d-inline font-weight-bold">Richiedere</div>, non è possibile annullare l'assegnazione se non contattandomi direttamente.
+  <div class="red mr-2 d-inline font-weight-bold">ATTENZIONE</div>Se si preme <div class="green d-inline font-weight-bold">Assegna</div>, non è possibile annullare l'assegnazione se non contattandomi direttamente.
 </div>
 
+<div id="loading-indicator">Caricamento...</div>
 <table class="table table-striped table-bordered table-sort" id="wishlist-table">
   <thead>
     <tr>
@@ -127,7 +128,7 @@
         actionCell.classList.add('comment')
       }
       else{
-        actionCell.textContent = 'Richiedere'
+        actionCell.textContent = 'Assegna'
         actionCell.classList.add('green')
       }
       actionCell.onclick = async () => {
@@ -168,7 +169,14 @@
     loadGraphics();
   }
 
-  document.addEventListener('DOMContentLoaded', loadWishlist);
+  document.addEventListener('DOMContentLoaded', async () => {
+  const loadingIndicator = document.getElementById('loading-indicator');
+  loadingIndicator.style.display = 'block'; // Show loading indicator
+
+  await loadWishlist(); // Load wishlist data
+
+  loadingIndicator.style.display = 'none'; // Hide loading indicator after data is loaded
+});
 
   function highlightcell(){
     var bgcolor = $(this).css("background-color");//chiaro);
