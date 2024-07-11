@@ -121,21 +121,24 @@
       const actionCell = document.createElement('td');
       actionCell.style.verticalAlign = "middle"
       actionCell.style.textAlign = 'center';
-      actionCell.classList.add("hover-underline")
       actionCell.classList.add("font-weight-bold")
       if(item.claimed){
         actionCell.textContent = 'Assegnato'
-        actionCell.classList.add('comment')
+        actionCell.classList.add('comment')        
       }
       else{
         actionCell.textContent = 'Assegna'
         actionCell.classList.add('green')
+        actionCell.classList.add("hover-underline")
       }
       actionCell.onclick = async () => {
-        actionCell.textContent = 'Attendi...';
-        actionCell.classList.remove('green')
-        actionCell.classList.add('lightorange')
-        await claimProduct(item.id);
+        if (actionCell.classList.contains('green')) {
+          actionCell.textContent = 'Attendi...';
+          actionCell.classList.remove('green')
+          actionCell.classList.remove('hover-underline')
+          actionCell.classList.add('lightorange')
+          await claimProduct(item.id);
+        }
       }
       row.appendChild(actionCell);
 
