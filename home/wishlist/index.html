@@ -5,9 +5,7 @@
 
   <script src="https://code.jquery.com/jquery-latest.min.js"></script>
   <script src="https://unpkg.com/survey-jquery@1.8.22/survey.jquery.min.js"></script>
-  <!-- Font Awesome Script -->
   <script src="https://kit.fontawesome.com/93028db3a0.js" crossorigin="anonymous"></script>
-  
   <!-- Data Tables -->
   <script src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js"></script>
   <script src="https://cdn.datatables.net/1.10.22/js/dataTables.bootstrap4.min.js"></script>
@@ -55,7 +53,7 @@
                             <th scope="col" width="11%">🖼️ Img</th>
                             <th scope="col" width="20%">🎁 Prodotto</th>
                             <th scope="col" width="40%">🗒️ Note</th>
-                            <th scope="col" width="12%">🔗 Link</th>
+                            <th scope="col" width="12%" class="link-column">🔗 Link</th>
                             <th scope="col" width="15%"></th>
                         </tr>
                     </thead>
@@ -80,7 +78,6 @@
     const tableBody = document.getElementById('wishlist-table').querySelector('tbody');
     tableBody.innerHTML = ''; // Clear existing rows
 
-    // Filter data to include only items that have all the required fields
     const filteredData = data.filter(item => item.id && item.id_anonym && item.product && item.url);
 
     filteredData.forEach((item,index) => {
@@ -89,23 +86,28 @@
 
       const headerCell = document.createElement('th');
       headerCell.scope = 'row';
-      headerCell.textContent = index + 1; // Add a sequential number for each row
+      headerCell.textContent = index + 1;
       row.appendChild(headerCell);
 
       // Image cell
       const imageCell = document.createElement('td');
       imageCell.style.textAlign = 'center';
-      imageCell.style.width = '11%'; // Set column width for image
-      imageCell.style.position = 'relative'; // Ensure image container respects aspect ratio
-      imageCell.style.backgroundImage = `url('${item.img}')`; // Replace with the path to your image
-      imageCell.style.backgroundSize = 'contain'; // Optional: Adjust the background size
+      imageCell.style.width = '11%';
+      imageCell.style.position = 'relative';
+      imageCell.style.backgroundImage = `url('${item.img}')`;
+      imageCell.style.backgroundSize = 'contain';
       imageCell.style.backgroundRepeat = 'no-repeat';
       imageCell.style.backgroundPosition = 'center';
       row.appendChild(imageCell);
 
+      // Product cell (now contains the link)
       const productCell = document.createElement('td');
-      productCell.style.verticalAlign = "middle"
-      productCell.textContent = item.product;
+      productCell.style.verticalAlign = "middle";
+      const productLink = document.createElement('a');
+      productLink.href = item.url;
+      productLink.textContent = item.product;
+      productLink.target = "_blank"; // Open link in a new tab
+      productCell.appendChild(productLink);
       row.appendChild(productCell);
 
       const noteCell = document.createElement('td');
@@ -113,12 +115,15 @@
       noteCell.textContent = item.note;
       row.appendChild(noteCell);
 
+      // Website cell (will be hidden on mobile)
       const websiteCell = document.createElement('td');
+      websiteCell.classList.add('link-column'); // Add class to hide on mobile
       websiteCell.style.verticalAlign = "middle"
       websiteCell.style.textAlign = 'center';
       const link = document.createElement('a');
       link.href = item.url;
       link.textContent = item.website;
+      link.target = "_blank";
       websiteCell.appendChild(link);
       row.appendChild(websiteCell);
 
@@ -152,22 +157,19 @@
     try {
         const response = await fetch(sheetUrl, {
             method: 'POST',
-            mode: 'no-cors', // Note: 'no-cors' responses are opaque and you can't check 'ok' status.
+            mode: 'no-cors',
             headers: {
                 'Content-Type': 'application/json'
             },
             body: message
         });
 
-        // Since 'no-cors' prevents reading the response, we optimistically reload.
-        // The alert will be shown, and then the table will refresh.
         alert('✅ Prodotto assegnato con successo!');
         loadWishlist();
 
     } catch (error) {
         console.error('There was an error claiming the product:', error);
         alert('✖️ C\'è stato un errore durante l\'assegnazione del prodotto.');
-        // Even on error, refresh to get the latest state from the server.
         loadWishlist();
     }
 }
@@ -181,13 +183,11 @@
         createTable(data);
     } catch (error) {
         console.error("Failed to load wishlist:", error);
-        // Optionally display an error message to the user
     } finally {
         loadingIndicator.style.display = 'none';
     }
 }
 
-// THEME SWITCHER LOGIC
 const themeToggle = document.getElementById('checkbox');
 const body = document.body;
 
@@ -201,14 +201,12 @@ themeToggle.addEventListener('change', function() {
     }
 });
 
-// Apply the saved theme on page load
 document.addEventListener('DOMContentLoaded', async () => {
     const savedTheme = localStorage.getItem('theme');
     if (savedTheme === 'dark-mode') {
         body.classList.add('dark-mode');
         themeToggle.checked = true;
     } else {
-        // Light mode is the default
         themeToggle.checked = false;
     }
     await loadWishlist();

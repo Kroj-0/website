@@ -70,7 +70,7 @@ a:hover {
     text-decoration: none;
 }
 
-/* Theme Switcher */
+/* --- THEME SWITCHER --- */
 .theme-switcher-container {
     position: absolute;
     top: 1rem;
@@ -109,14 +109,10 @@ a:hover {
     bottom: 4px;
     background-color: var(--slider-before-bg);
     transition: .4s;
-    
-    /* Add icon using pseudo-element content */
     font-family: "Font Awesome 5 Free";
     font-weight: 900;
     content: "\f185"; /* Sun icon */
     color: var(--icon-color);
-
-    /* Center the icon */
     display: flex;
     align-items: center;
     justify-content: center;
@@ -138,19 +134,17 @@ input:checked + .slider:before {
 .slider.round:before {
     border-radius: 50%;
 }
-/* --- END OF THEME SWITCHER SECTION --- */
-
 
 /* Table Styles */
 .table-responsive {
     border-radius: 8px;
-    overflow: hidden; /* Ensures the border-radius is applied to the table */
+    overflow: hidden; 
     border: 1px solid var(--table-border-color);
 }
 .table {
     background-color: var(--bg-color);
     color: var(--text-color);
-    margin-bottom: 0; /* Remove default margin from bootstrap */
+    margin-bottom: 0;
 }
 .table thead th {
     background-color: var(--table-header-bg);
@@ -235,4 +229,11 @@ body.dark-mode .page-item .page-link:hover {
 body.dark-mode .page-item.active .page-link {
     background-color: #AE81FF !important;
     border-color: #AE81FF;
+}
+
+/* --- RESPONSIVE STYLES FOR MOBILE --- */
+@media (max-width: 767px) {
+  .link-column {
+    display: none;
+  }
 }
