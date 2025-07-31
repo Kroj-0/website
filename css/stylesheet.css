@@ -14,11 +14,12 @@
     --assign-btn-bg: #28a745;
     --assign-btn-text: #ffffff;
     --assign-btn-hover-bg: #218838;
-    --loader-color: #007bff;
     --slider-bg: #ccc;
     --slider-before-bg: white;
     --slider-checked-bg: #2196F3;
     --icon-color: #f39c12;
+    --loader-overlay-bg: rgba(255, 255, 255, 0.6);
+    --loader-box-bg: #ffffff;
 }
 
 body.dark-mode {
@@ -36,10 +37,11 @@ body.dark-mode {
     --assign-btn-bg: #A6E22E;
     --assign-btn-text: #272822;
     --assign-btn-hover-bg: #8cb627;
-    --loader-color: #A6E22E;
     --slider-bg: #555;
     --slider-before-bg: #F8F8F2;
     --slider-checked-bg: #A6E22E;
+    --loader-overlay-bg: rgba(39, 40, 34, 0.6);
+    --loader-box-bg: #343a40;
 }
 
 /* General Body Styles */
@@ -191,17 +193,80 @@ td {
     cursor: not-allowed;
 }
 
-/* Loading Indicator */
+
+/* --- OVERLAY STYLES --- */
 #loading-indicator {
     position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    font-size: 1.5em;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
     display: none;
-    color: var(--loader-color);
-    z-index: 1000;
-    background: transparent;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--loader-overlay-bg);
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+    z-index: 9999;
+}
+
+#loading-indicator b {
+    color: var(--text-color);
+    background-color: var(--loader-box-bg);
+    padding: 20px 30px;
+    border-radius: 10px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+    font-size: 1.2em;
+}
+
+#custom-alert {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--loader-overlay-bg);
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+    z-index: 10000; /* Higher than loader */
+}
+
+.alert-box {
+    color: var(--text-color);
+    background-color: var(--loader-box-bg);
+    padding: 25px 35px;
+    border-radius: 10px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+    text-align: center;
+    max-width: 90%;
+}
+
+#alert-message {
+    font-size: 1.2em;
+    margin-bottom: 20px;
+    margin-top: 0;
+}
+
+#alert-close-btn {
+    background-color: var(--link-color);
+    color: var(--bg-color);
+    border: none;
+    padding: 10px 30px;
+    border-radius: 5px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+#alert-close-btn:hover {
+    background-color: var(--link-hover-color);
+}
+
+body.dark-mode #alert-close-btn {
+    color: #272822;
 }
 
 
