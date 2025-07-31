@@ -18,6 +18,7 @@
     --slider-bg: #ccc;
     --slider-before-bg: white;
     --slider-checked-bg: #2196F3;
+    --icon-color: #f39c12;
 }
 
 body.dark-mode {
@@ -102,25 +103,32 @@ a:hover {
 
 .slider:before {
     position: absolute;
-    content: "";
     height: 26px;
     width: 26px;
     left: 4px;
     bottom: 4px;
     background-color: var(--slider-before-bg);
     transition: .4s;
+    
+    /* Add icon using pseudo-element content */
+    font-family: "Font Awesome 5 Free";
+    font-weight: 900;
+    content: "\f185"; /* Sun icon */
+    color: var(--icon-color);
+
+    /* Center the icon */
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
-input:checked+.slider {
+input:checked + .slider {
     background-color: var(--slider-checked-bg);
 }
 
-input:focus+.slider {
-    box-shadow: 0 0 1px var(--slider-checked-bg);
-}
-
-input:checked+.slider:before {
+input:checked + .slider:before {
     transform: translateX(26px);
+    content: "\f186"; /* Moon icon */
 }
 
 .slider.round {
@@ -130,6 +138,7 @@ input:checked+.slider:before {
 .slider.round:before {
     border-radius: 50%;
 }
+/* --- END OF THEME SWITCHER SECTION --- */
 
 
 /* Table Styles */
@@ -213,7 +222,7 @@ td {
     color: var(--green-color);
 }
 
-/* Overriding Bootstrap pagination for dark mode if you use it later */
+/* Overriding Bootstrap pagination */
 body.dark-mode .page-item .page-link {
     background-color: #343a40 !important;
     color: #F5F5F0 !important;
