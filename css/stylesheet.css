@@ -307,3 +307,83 @@ body.dark-mode .page-item.active .page-link {
     display: none;
   }
 }
+
+/* --- NAVIGATION BAR STYLES --- */
+.main-nav {
+    margin-bottom: 2rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid var(--table-border-color);
+    text-align: center;
+}
+.main-nav a {
+    text-decoration: none;
+    padding: 8px 15px;
+    margin: 0 5px;
+    border-radius: 5px;
+    transition: background-color 0.2s;
+    font-size: 1.1em;
+}
+.main-nav a:hover {
+    background-color: var(--table-hover-bg);
+}
+.main-nav a.active {
+    font-weight: bold;
+    color: var(--bg-color);
+    background-color: var(--link-color);
+}
+body.dark-mode .main-nav a.active {
+    color: #272822; /* Specific color for dark mode active text */
+}
+
+/* --- NOTES PAGE SPECIFIC STYLES --- */
+.note-section {
+    background-color: var(--table-striped-bg);
+    border: 1px solid var(--table-border-color);
+    border-radius: 8px;
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+.note-section h2 {
+    border-bottom: 2px solid var(--link-color);
+    padding-bottom: 0.5rem;
+    margin-bottom: 1rem;
+    font-size: 1.8em;
+}
+.note-section h3 {
+    font-size: 1.3em;
+    color: var(--text-color);
+    margin-top: 1.5rem;
+    margin-bottom: 0.75rem;
+}
+.note-section p, .note-section ul {
+    font-size: 1.1em;
+    line-height: 1.6;
+}
+.note-section ul {
+    list-style-position: inside;
+    padding-left: 0;
+}
+
+/* --- OVERLAY STYLES (for loading indicator) --- */
+#loading-indicator {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--loader-overlay-bg);
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+    z-index: 9999;
+}
+#loading-indicator b {
+    color: var(--text-color);
+    background-color: var(--loader-box-bg);
+    padding: 20px 30px;
+    border-radius: 10px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+    font-size: 1.2em;
+}

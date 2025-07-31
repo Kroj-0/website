@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+ <meta charset="UTF-8">
+ <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <script src="https://code.jquery.com/jquery-latest.min.js"></script>
+  <script src="https://kit.fontawesome.com/93028db3a0.js" crossorigin="anonymous"></script>
+
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons"/>
+
+  <!-- BOOTSTRAP Stylesheet -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+  <!-- Make sure this path is correct -->
+  <link rel="stylesheet" type="text/css" href="../css/stylesheet.css"  />
+</head>
+
+<body>
+    <main role="main">
+        <div class="container">
+            <div class="theme-switcher-container">
+                <label class="theme-switcher" for="checkbox">
+                    <input type="checkbox" id="checkbox" />
+                    <div class="slider round"></div>
+                </label>
+            </div>
+            
+            <!-- Navigation -->
+            <nav class="main-nav">
+                <a href="index.html" class="active">📝 Note</a>
+                <a href="wishlist/index.html">🎁 Wishlist</a>
+            </nav>
+
+            <h1>🏠 Home notes</h1>
+
+            <!-- OVERLAY for Loading -->
+            <div id="loading-indicator">⌛️ Caricamento...</div>
+            
+            <!-- Dynamic content will be injected here -->
+            <div id="notes-container"></div>
+        </div>
+    </main>
+</body>
+<script type="text/javascript">
+// --- DYNAMIC CONTENT LOADER ---
+async function loadNotes() {
+    // !!! IMPORTANT: Paste your Apps Script URL here !!!
+    const scriptUrl = 'https://script.google.com/macros/s/AKfycbxJmNjXxlOmQlYhM4ICLs6zhfV-c3Bf2bDUl1Qoh6T8GI8YLLBaq9WynGwtWFO58bYd/exec';
+    const notesContainer = document.getElementById('notes-container');
+    const loadingIndicator = document.getElementById('loading-indicator');
+
+    loadingIndicator.style.display = 'flex';
+
+    try {
+        const response = await fetch(scriptUrl);
+        if (!response.ok) {
+            throw new Error(`Network response was not ok: ${response.statusText}`);
+        }
+        const sections = await response.json();
+        
+        if(sections.error) {
+          throw new Error(`Apps Script Error: ${sections.error}`);
+        }
+
+        notesContainer.innerHTML = ''; // Clear any previous content
+
+        // Render each section from the fetched data
+        sections.forEach(section => {
+            const sectionDiv = document.createElement('div');
+            sectionDiv.className = 'note-section';
+
+            const titleH2 = document.createElement('h2');
+            titleH2.innerHTML = section.title; // Use innerHTML to render emojis
+            sectionDiv.appendChild(titleH2);
+
+            const descP = document.createElement('p');
+            descP.textContent = section.description;
+            sectionDiv.appendChild(descP);
+
+            section.subsections.forEach(subsection => {
+                
+                // Only create and append the H3 element if the subsection title is not empty.
+                if (subsection.title && subsection.title.trim() !== '') {
+                    const subTitleH3 = document.createElement('h3');
+                    subTitleH3.textContent = subsection.title;
+                    sectionDiv.appendChild(subTitleH3);
+                }
+
+
+                if (subsection.items && subsection.items.length > 0) {
+                    const itemsUl = document.createElement('ul');
+                    subsection.items.forEach(item => {
+                        const itemLi = document.createElement('li');
+                        const strongTag = document.createElement('strong');
+                        strongTag.textContent = `${item.key}`;
+                        if(item.value){
+                            strongTag.textContent += ': '
+                        }
+                        
+                        itemLi.appendChild(strongTag);
+                        itemLi.appendChild(document.createTextNode(item.value));
+                        itemsUl.appendChild(itemLi);
+                    });
+                    sectionDiv.appendChild(itemsUl);
+                }
+            });
+
+            notesContainer.appendChild(sectionDiv);
+        });
+
+    } catch (error) {
+        console.error('Failed to load notes:', error);
+        notesContainer.innerHTML = `<div class="note-section" style="text-align:center; color: var(--red-color);">
+                                        <h2>✖️ Errore nel caricamento</h2>
+                                        <p>Impossibile caricare gli appunti. Controlla la console per maggiori dettagli.</p>
+                                    </div>`;
+    } finally {
+        loadingIndicator.style.display = 'none';
+    }
+}
+
+
+// --- THEME SWITCHER LOGIC ---
+const themeToggle = document.getElementById('checkbox');
+const body = document.body;
+
+themeToggle.addEventListener('change', function() {
+    if (this.checked) {
+        body.classList.add('dark-mode');
+        localStorage.setItem('theme', 'dark-mode');
+    } else {
+        body.classList.remove('dark-mode');
+        localStorage.setItem('theme', 'light-mode');
+    }
+});
+
+// Apply the saved theme and load notes on page load
+document.addEventListener('DOMContentLoaded', () => {
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme === 'dark-mode') {
+        body.classList.add('dark-mode');
+        themeToggle.checked = true;
+    } else {
+        themeToggle.checked = false;
+    }
+    // Load the dynamic content
+    loadNotes();
+});
+</script>
+</html>
