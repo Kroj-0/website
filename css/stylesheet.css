@@ -74,7 +74,7 @@ a:hover {
 
 /* --- THEME SWITCHER --- */
 .theme-switcher-container {
-    position: absolute;
+    position: fixed;
     top: 1rem;
     right: 1.5rem;
 }
@@ -335,6 +335,105 @@ body.dark-mode .main-nav a.active {
     color: #272822; /* Specific color for dark mode active text */
 }
 
+/* --- Sidebar Navigation System --- */
+
+/* Sidebar Toggle Button (Hamburger) */
+.sidebar-toggle {
+    position: fixed;
+    top: 1rem;
+    left: 1.5rem;
+    z-index: 1100; /* Higher than sidebar */
+    background: var(--table-header-bg);
+    border: 1px solid var(--table-border-color);
+    border-radius: 8px;
+    width: 45px;
+    height: 45px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+.sidebar-toggle:hover {
+    background: var(--table-hover-bg);
+}
+
+/* The Sidebar Itself */
+.main-sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 250px;
+    height: 100%;
+    background-color: var(--bg-color);
+    border-right: 1px solid var(--table-border-color);
+    transform: translateX(-100%); /* Initially hidden */
+    transition: transform 0.3s ease;
+    z-index: 1050;
+    padding-top: 5rem; /* Space for the toggle button */
+}
+
+/* When body has .sidebar-open, the sidebar slides in */
+body.sidebar-open .main-sidebar {
+    transform: translateX(0);
+}
+
+.main-sidebar h2 {
+    padding: 0 1.5rem;
+    font-size: 1.5rem;
+    border-bottom: 2px solid var(--link-color);
+    margin: 0 1rem 1rem 1rem;
+    padding-bottom: 0.5rem;
+}
+
+.main-sidebar nav a {
+    display: block;
+    padding: 12px 1.5rem;
+    color: var(--text-color);
+    text-decoration: none;
+    font-size: 1.1em;
+    font-weight: 500;
+    border-left: 4px solid transparent;
+}
+
+.main-sidebar nav a:hover {
+    background-color: var(--table-hover-bg);
+}
+
+.main-sidebar nav a.active {
+    font-weight: bold;
+    color: var(--link-color);
+    border-left: 4px solid var(--link-color);
+}
+body.dark-mode .main-sidebar nav a.active {
+    color: var(--green-color);
+    border-left-color: var(--green-color);
+}
+
+
+/* Adjust Main Content when sidebar is open */
+main {
+    transition: margin-left 0.3s ease;
+}
+
+/* On larger screens, push the main content to the right */
+@media (min-width: 992px) {
+    body.sidebar-open main {
+        margin-left: 250px;
+    }
+    .sidebar-toggle {
+        display: none; /* Hide hamburger on large screens */
+    }
+    .main-sidebar {
+        transform: translateX(0); /* Sidebar is always visible */
+    }
+    main {
+        margin-left: 250px; /* Always have margin */
+    }
+}
+
+
 /* --- NOTES PAGE SPECIFIC STYLES --- */
 .note-section {
     background-color: var(--table-striped-bg);
@@ -386,4 +485,74 @@ body.dark-mode .main-nav a.active {
     border-radius: 10px;
     box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
     font-size: 1.2em;
+}
+
+/* --- Code Block Styles for Guide --- */
+pre:not(.mermaid) {
+    background-color: var(--table-header-bg);
+    border: 1px solid var(--table-border-color);
+    border-radius: 8px;
+    padding: 1rem;
+    white-space: pre-wrap;       /* CSS 3 */
+    white-space: -moz-pre-wrap;  /* Mozilla, since 1999 */
+    word-wrap: break-word;       /* Internet Explorer 5.5+ */
+    font-family: 'Courier New', Courier, monospace;
+}
+code {
+    font-family: 'Courier New', Courier, monospace;
+    background-color: var(--table-border-color);
+    padding: 2px 5px;
+    border-radius: 4px;
+}
+pre:not(.mermaid) code {
+    background-color: transparent;
+    padding: 0;
+    border-radius: 0;
+}
+/* Mermaid responsive container */
+.mermaid-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  margin-top: 1.5rem;
+  overflow: hidden; /* nasconde eventuali overflow */
+}
+
+.mermaid-container .mermaid {
+  width: 100%;
+  height: auto;
+  max-width: 100%;
+}
+
+.mermaid-container .mermaid svg {
+  display: block;
+  width: 100% !important;
+  height: auto !important;
+  max-width: 100%;
+}
+
+pre.mermaid {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  overflow: hidden; /* nessun scroll */
+  margin: 0 auto;   /* centra rispetto al contenitore */
+}
+
+pre.mermaid svg {
+  display: block;
+  margin: 0 auto;   /* centra orizzontalmente */
+  width: 100% !important; /* occupa tutta la larghezza disponibile */
+  height: auto !important; /* mantiene le proporzioni */
+}
+
+
+/* Text tags with emojis */
+price::before {
+  content: "💰Prezzo:\00a0"; /* \00a0 = NBSP */
+  font-weight: bold;
+  white-space: nowrap;   /* keeps emoji + label on the same line */
+  display: inline-block; /* makes nowrap apply as a unit */
 }

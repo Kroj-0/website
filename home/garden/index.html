@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+ <meta charset="UTF-8">
+ <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons"/>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+
+  <!-- Main custom CSS -->
+  <link rel="stylesheet" type="text/css" href="/css/stylesheet.css"  />
+  <!-- Prism theme placeholder -->
+  <link id="prism-theme-link" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" />
+
+  <title>Guida Irrigazione | Home Project</title>
+</head>
+
+<body>
+    <!-- The sidebar will be injected here by our script -->
+    <div id="sidebar-container"></div>
+
+    <main role="main">
+        <div class="container">
+            <div class="theme-switcher-container">
+                <label class="theme-switcher" for="checkbox">
+                    <input type="checkbox" id="checkbox" />
+                    <div class="slider round"></div>
+                </label>
+            </div>
+            
+            <!-- NEW Secondary Top-Tab Navigation -->
+            <nav class="main-nav">
+                <a href="/home">📝 Appunti Generali</a>
+                <a href="/home/garden" class="active">💧 Guida Irrigazione</a>
+            </nav>
+
+            <h1>💧 Guida Definitiva all'Irrigazione Custom</h1>
+
+            <div class="note-section">
+                <h2>💡 La Visione: Un'Oasi Data-Driven</h2>
+                <p>Questa guida è il tuo blueprint per creare un sistema di irrigazione che va oltre il "smart": un sistema veramente intelligente, efficiente e interamente controllato da te. L'obiettivo è trasformare il tuo giardino in un ecosistema automatizzato dove ogni comando è il risultato di una decisione logica basata su dati reali, costruendo una soluzione che unisce idraulica, elettronica e sviluppo software.</p>
+            </div>
+            
+            <div class="note-section">
+                <h2>🌊 Il Blueprint Idraulico: Capire il Flusso dell'Acqua</h2>
+                <p>Prima di parlare di componenti, è fondamentale capire l'architettura idraulica. Un errore comune è non distinguere tra la tubazione principale e le tubazioni di zona. Comprendere questa distinzione è la chiave per un sistema flessibile e funzionante.</p>
+                
+                <h3>La Linea Principale (Main Line)</h3>
+                <p>Immagina la linea principale come il "power bus" del tuo sistema. È il tubo che parte dalla tua fonte d'acqua (es. il rubinetto esterno) e arriva fino al gruppo di elettrovalvole. La sua caratteristica fondamentale è che <strong>è sempre in pressione</strong>, 24 ore su 24, 7 giorni su 7.</p>
+
+                <h3>Le Linee di Zona (Zone/Lateral Lines)</h3>
+                <p>Queste sono le tubazioni che partono <em>dopo</em> ogni singola elettrovalvola e arrivano fino agli erogatori (gocciolatori o irrigatori). Queste linee sono "morte", ovvero <strong>non in pressione</strong>, fino a quando la centralina non comanda alla loro specifica elettrovalvola di aprirsi. Quando la valvola si apre, la linea di zona si pressurizza e l'irrigazione ha inizio.</p>
+
+                <p>Questa architettura è il motivo per cui le zone sono indipendenti. Lo schema seguente illustra il flusso logico e fisico dell'acqua attraverso il sistema.</p>
+                
+                <!-- NUOVO DIAGRAMMA MERMAID -->
+                <div class="mermaid-container">
+                    <pre class="mermaid">
+                        graph TD
+                            subgraph "Controllo Elettrico (Remoto, in garage/cantina)"
+                                CTRL[🧠 Centralina Smart];
+                            end
+
+                            subgraph "Fonte e Sicurezza"
+                                A[💧 Fonte Acqua] --> B(🛡️ Valvola Anti-Riflusso);
+                                B --> C(🗑️ Filtro Principale);
+                            end
+
+                            subgraph "Distribuzione Principale"
+                                C --> D["Tubazione Principale<br/>(Sempre in Pressione)"];
+                                D --> E[Pozzetto con Collettore Valvole];
+                            end
+                            
+                            subgraph "Zona 1: Prato - Alta Pressione"
+                                E --> F[⚡ Elettrovalvola Z1];
+                                F --> G["Tubazione Zona 1<br/>(In pressione solo se Z1 attiva)"];
+                                G --> H(🚿 Irrigatori Pop-Up);
+                            end
+
+                            subgraph "Zona 2: Orto - Bassa Pressione"
+                                E --> I[⚡ Elettrovalvola Z2];
+                                I --> J(🔽 Riduttore di Pressione);
+                                J --> K["Tubazione Zona 2<br/>(In pressione solo se Z2 attiva)"];
+                                K --> L(🌱 Ala Gocciolante);
+                            end
+
+                            %% Connessioni Elettriche di Controllo
+                            CTRL -.->|Comando 24V AC| F;
+                            CTRL -.->|Comando 24V AC| I;
+
+                            %% Stili
+                            classDef mainLine fill:#a3e635,stroke:#1f2937,stroke-width:2px,color:#1f2937;
+                            classDef zoneLine fill:#a5b4fc,stroke:#1f2937,stroke-width:2px,color:#1f2937;
+                            classDef control fill:#fde047,stroke:#1f2937,stroke-width:2px,color:#1f2937;
+                            class D mainLine;
+                            class G,K zoneLine;
+                            class CTRL control;
+                    </pre>
+                </div>
+            </div>
+
+            <div class="note-section">
+                <h2>🔩 Hardware: L'Anatomia del Sistema</h2>
+                <p>Ora che il flusso è chiaro, analizziamo i componenti fisici. I prezzi sono stime per il mercato del Nord Italia.</p>
+
+                <h3>🧠 Il Cervello: La Centralina Smart (Controller)</h3>
+                <p>Il componente critico che funge da bridge tra il tuo codice e l'hardware. La sua API è la tua porta d'accesso al controllo fisico del sistema.</p>
+                <ul>
+                    <li><strong>Opzioni Consigliate:</strong> Hunter Hydrawise (<price>€150 - €300</price>), Rachio (<price>€200 - €350</price>, online), OpenSprinkler (<price>€150 - €250</price>, per smanettoni).</li>
+                    <li><strong>💪 Sforzo Installazione:</strong> Basso. Fissaggio a muro e collegamenti elettrici.</li>
+                </ul>
+
+                <h3>❤️ Il Cuore: Il Gruppo Valvole nel Pozzetto</h3>
+                <p>Questo è il centro di distribuzione, un assemblaggio di componenti che vive sottoterra in un apposito contenitore ispezionabile.</p>
+                <ul>
+                    <li><strong>Pozzetto (Valve Box):</strong> Un contenitore in plastica verde o nera che protegge le valvole da terra e urti. <price>€15 - €40</price> a seconda della dimensione.</li>
+                    <li><strong>Collettore (Manifold):</strong> Un componente in PVC o polietilene con uscite multiple filettate. Permette di avvitare più elettrovalvole in serie in modo pulito e ordinato, distribuendo l'acqua proveniente dalla linea principale. <price>€10 - €30</price>.</li>
+                    <li><strong>Elettrovalvole (Solenoid Valves):</strong> I "rubinetti" a 24V AC comandati dalla centralina. Ne serve una per ogni zona. <price>€15 - €30</price> l'una.</li>
+                    <li><strong>💪 Sforzo Installazione:</strong> Medio. Richiede l'assemblaggio del collettore, l'avvitamento delle valvole (usando nastro teflon), e il collegamento idraulico ed elettrico.</li>
+                </ul>
+                
+                <h3>🛡️ Sicurezza e Qualità dell'Acqua</h3>
+                <p>Questi componenti sono spesso trascurati, ma sono vitali per la longevità e la sicurezza del sistema.</p>
+                <ul>
+                    <li><strong>Filtro a Rete o a Dischi:</strong> Installato sulla linea principale subito dopo la fonte d'acqua, prima che arrivi alle valvole. Cattura sabbia, ruggine e altre impurità che altrimenti intaserebbero irrimediabilmente i piccoli ugelli degli irrigatori e, soprattutto, dei gocciolatori. È un componente <strong>assolutamente non negoziabile</strong>. <price>€20 - €50</price> per un buon filtro ispezionabile e lavabile.</li>
+                    <li><strong>Riduttore di Pressione (Pressure Reducer):</strong> La pressione dell'acquedotto (3-4 bar) è perfetta per gli irrigatori, ma è troppo alta per l'ala gocciolante, che lavora idealmente a 1.0-1.8 bar. Questo componente si installa <em>sulla linea di zona</em>, dopo l'elettrovalvola e prima che inizi l'ala gocciolante. Previene lo sfilamento dei gocciolatori e garantisce un'erogazione uniforme. <price>€10 - €25</price>.</li>
+                    <li><strong>Valvola Anti-Riflusso (Backflow Preventer):</strong> Un dispositivo di sicurezza che impedisce all'acqua ferma nell'impianto di irrigazione (potenzialmente contaminata da fertilizzanti e batteri) di tornare indietro nell'acquedotto domestico in caso di cali di pressione. Obbligatorio in molte normative. <price>€15 - €40</price>.</li>
+                </ul>
+
+                <h3>💧 L'Erogazione: Irrigatori e Gocciolatori</h3>
+                <p>I terminali che distribuiscono l'acqua. La scelta dipende dall'area da bagnare ed è fondamentale per l'efficienza.</p>
+                <ul>
+                    <li><strong>Irrigatori a Scomparsa (Pop-up):</strong> Ideali per il prato. Emettono molta acqua in poco tempo. <price>€5 - €20</price> ad irrigatore.</li>
+                    <li><strong>Ala Gocciolante (Drip Line):</strong> La scelta d'elezione per aiuole, orto, siepi e vasi. Rilascia acqua lentamente e direttamente alle radici. <price>€20 - €40</price> per 50 metri.</li>
+                </ul>
+                <h4>⚠️ Regola Fondamentale: Mai Mischiare Erogatori Diversi sulla Stessa Zona</h4>
+                <p>Irrigatori pop-up e ala gocciolante <strong>devono tassativamente trovarsi in zone separate</strong>. Il motivo è il loro diversissimo <strong>Tasso di Precipitazione</strong>. I pop-up erogano in <em>litri al minuto</em>, l'ala gocciolante in <em>litri all'ora</em>. Se fossero sulla stessa linea, per dare la giusta (poca) acqua al prato lasceresti l'orto a secco; per dare la giusta (tanta) acqua all'orto, allagheresti il prato. Ogni zona deve avere una tipologia omogenea di erogatori.</p>
+
+                <h3>⚡ Il Sistema Nervoso: Cablaggi Elettrici</h3>
+                <ul>
+                    <li><strong>Cavo Multipolare per Irrigazione:</strong> Cavo specifico per interramento, con una guaina protettiva e fili di colori diversi all'interno. Serve un filo "comune" da collegare a tutte le valvole, più un filo dedicato per ogni singola valvola. <price>€1 - €2</price> al metro.</li>
+                    <li><strong>Connettori Stagni (Gel-Filled Connectors):</strong> Fondamentali per collegare i fili del cavo multipolare alle elettrovalvole nel pozzetto. Il gel al loro interno previene la corrosione dovuta all'umidità, garantendo una connessione affidabile per anni. Usare normale nastro isolante è una garanzia di problemi futuri. <price>€5 - €10</price> per una confezione.</li>
+                </ul>
+            </div>
+
+            <div class="note-section">
+                <h2>📈 Scalabilità del Sistema: Progettare per il Futuro</h2>
+                <p>Un buon design ti permette di espandere il sistema senza dover rifare tutto da capo. L'aggiunta di una nuova zona è semplice se hai pianificato in anticipo.</p>
+                
+                <h3>Come Aggiungere una Nuova Zona Correttamente</h3>
+                <p>Ricordando il nostro blueprint idraulico, una nuova "zona" significa aggiungere un nuovo percorso controllato che parte dal cuore del sistema. Il processo corretto è:</p>
+                <ol>
+                    <li><strong>Aggiungere una nuova Elettrovalvola</strong> al collettore nel pozzetto principale.</li>
+                    <li><strong>Stendere una nuova Linea di Zona</strong> che parte da questa nuova valvola e arriva fino alla nuova area da irrigare.</li>
+                    <li><strong>Collegare la nuova valvola alla Centralina</strong> usando un filo libero nel cavo multipolare.</li>
+                </ol>
+                <p>Non si deve mai "biforcare" una linea di zona esistente per creare due aree, perché sarebbero irrigate contemporaneamente. E non si deve "biforcare" la linea principale a valle del pozzetto, perché non si avrebbe modo di controllare la nuova linea (sarebbe sempre in pressione o dipendente da un'altra valvola).</p>
+                
+                <h3>Consigli per la Scalabilità:</h3>
+                <ul>
+                    <li><strong>Centralina Sovradimensionata:</strong> Compra una centralina con il 25-50% di zone in più di quelle che ti servono (es. se hai 6 zone, prendine una da 8 o 12). La differenza di costo è minima rispetto alla sostituzione dell'intera unità.</li>
+                    <li><strong>Pozzetto Spazioso:</strong> Usa un pozzetto che abbia spazio fisico per aggiungere 1-2 valvole in futuro.</li>
+                    <li><strong>Collettore Predisposto:</strong> Quando assembli il collettore, puoi acquistare un modello con un'uscita in più e chiuderla con un tappo filettato. L'aggiunta futura sarà un gioco da ragazzi.</li>
+                    <li><strong>Cavo Multipolare con Fili Extra:</strong> Se interri un cavo per 6 zone, usane uno da 8 o 10 fili. Quei fili extra non costano quasi nulla e ti salvano dal dover posare un nuovo cavo.</li>
+                </ul>
+            </div>
+
+            <div class="note-section">
+                <h2>📡 I Sensi: Dare Consapevolezza al Sistema</h2>
+                <p>Per un sistema veramente intelligente, i dati sono tutto. I sensori forniscono il feedback dal mondo reale necessario per prendere decisioni informate, andando oltre un semplice programma a tempo.</p>
+                <ul>
+                    <li><strong>Sensori di Umidità del Terreno (Soil Moisture Sensors):</strong> Misurano direttamente la quantità d'acqua nel terreno, permettendoti di irrigare solo "al bisogno". <strongprice>-€100 per</price> modelli professionali cablati, <price>€15- € 30</price> per alternative wireless (es. Xiaomi/Aqara).</li>
+                    <li><strong>Sensore Pioggia (Rain Sensor):</strong> Un semplice interruttore che sospende l'irrigazione quando rileva la pioggia. <price>€20 - €40</price>.</li>
+                </ul>
+            </div>
+
+            <div class="note-section">
+                <h2>💻 Il Codice: Unire Hardware e Software</h2>
+                <p>La centralina smart agisce come un'API per il tuo giardino. Tu non devi preoccuparti di gestire tensioni o temporizzazioni; devi solo fare delle chiamate HTTP per orchestrare le operazioni basandoti sulla tua logica custom e sui dati dei sensori.</p>
+                <pre><code class="language-python">
+# Esempio concettuale di logica di controllo in Python
+import requests
+import os
+import time
+
+# --- Configurazione ---
+CONTROLLER_API_KEY = os.getenv("IRRIGATION_API_KEY")
+CONTROLLER_API_URL = "https://api.smartcontroller.com/v1"
+WEATHER_API_KEY = os.getenv("WEATHER_API_KEY")
+
+ZONES = {
+    "orto": {"id": "zone-1", "sensor_topic": "garden/sensors/soil_orto", "threshold": 35, "duration_min": 45},
+    "prato": {"id": "zone-2", "sensor_topic": "garden/sensors/soil_prato", "threshold": 40, "duration_min": 15},
+    "vasi": {"id": "zone-3", "sensor_topic": "garden/sensors/soil_vasi", "threshold": 25, "duration_min": 10}
+}
+
+def get_soil_moisture_from_mqtt(topic):
+    # Funzione placeholder che simula una lettura da un broker MQTT
+    readings = {"garden/sensors/soil_orto": 32, "garden/sensors/soil_prato": 45, "garden/sensors/soil_vasi": 22}
+    return readings.get(topic)
+
+def get_rain_chance():
+    # Funzione placeholder per chiamata ad API meteo
+    return 10 # 10%
+
+def start_watering(zone_id, duration_minutes):
+    headers = {"Authorization": f"Bearer {CONTROLLER_API_KEY}"}
+    payload = {"id": zone_id, "duration": duration_minutes * 60}
+    try:
+        response = requests.post(f"{CONTROLLER_API_URL}/zone/start", json=payload, headers=headers)
+        response.raise_for_status()
+        print(f"Irrigazione avviata per la zona {zone_id} per {duration_minutes} minuti.")
+    except requests.exceptions.RequestException as e:
+        print(f"Errore nell'avvio dell'irrigazione per la zona {zone_id}: {e}")
+
+def main_loop():
+    print("Avvio del ciclo di controllo irrigazione...")
+    rain_chance = get_rain_chance()
+
+    if rain_chance > 40:
+        print(f"Probabilità di pioggia alta ({rain_chance}%), ciclo di irrigazione sospeso.")
+        return
+
+    for name, config in ZONES.items():
+        moisture = get_soil_moisture_from_mqtt(config["sensor_topic"])
+        if moisture is not None and moisture < config["threshold"]:
+            print(f"Umidità per '{name}' ({moisture}%) sotto la soglia ({config['threshold']}%). Avvio...")
+            start_watering(config["id"], config["duration_min"])
+        else:
+            print(f"Umidità per '{name}' ({moisture}%) OK.")
+
+if __name__ == "__main__":
+    while True:
+        main_loop()
+        time.sleep(1800) # Controlla ogni 30 minuti
+                </code></pre>
+            </div>
+
+            <div class="note-section">
+                <h2>📋 Piano d'Azione: Da Zero al Giardino Smart</h2>
+                <ol>
+                    <li><strong>Fase 1: Progettazione (💪 Sforzo Mentale: Alto, Tempo: 1-2 giorni)</strong>
+                        <p>Disegna la mappa del giardino, definisci le zone, scegli gli erogatori e traccia il percorso di tutte le tubazioni (principale e di zona).</p>
+                    </li>
+                    <li><strong>Fase 2: Acquisto Materiali (💪 Sforzo: Basso, Tempo: 1 giorno)</strong>
+                        <p>Crea una lista della spesa dettagliata basata sul progetto e acquista tutto il necessario.</p>
+                    </li>
+                     <li><strong>Fase 3: Installazione Fisica (💪 Sforzo Fisico: Molto Alto, Tempo: 2-4 giorni)</strong>
+                        <p>Questa è la fase più impegnativa. Include lo scavo delle trincee (tipicamente 15-25 cm di profondità), l'assemblaggio del pozzetto, la posa e il collegamento di tutti i tubi e raccordi, e l'installazione degli erogatori. Effettua sempre un test di pressione prima di ricoprire tutto per verificare l'assenza di perdite.</p>
+                    </li>
+                     <li><strong>Fase 4: Installazione Elettrica (💪 Sforzo: Medio, Tempo: 2-3 ore)</strong>
+                        <p>Fissa la centralina, posa il cavo multipolare dal pozzetto alla centralina ed esegui i collegamenti usando i connettori stagni. Collega la centralina al Wi-Fi.</p>
+                    </li>
+                    <li><strong>Fase 5: Sviluppo Software (💪 Sforzo Mentale: Medio-Alto, Tempo: Continuo)</strong>
+                        <p>Studia le API, configura i sensori, sviluppa il backend di controllo e crea la tua interfaccia di monitoraggio.</p>
+                    </li>
+                </ol>
+            </div>
+         </div>
+    </main>
+
+    <!--
+      SCRIPT LOADING SECTION
+      We load all third-party libraries first, directly in the HTML.
+      This ensures they are available in the global scope when our main.js script runs.
+    -->
+    <script src="https://code.jquery.com/jquery-latest.min.js"></script>
+    <script src="https://kit.fontawesome.com/93028db3a0.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-python.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-c.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-java.min.js"></script>
+
+    <!--
+      OUR GLOBAL SCRIPT
+      This is loaded last. It finds elements in the DOM and attaches all the logic.
+    -->
+    <script src="/js/main.js"></script>
+</body>
+</html>
