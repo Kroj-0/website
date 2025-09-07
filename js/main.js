@@ -95,46 +95,47 @@ function initializeThemeSwitcher() {
             
             return;
         }
+        requestAnimationFrame(() => {  // Wait one repaint
+            const currentTheme = {
+                background: getComputedStyle(document.body).getPropertyValue('--bg-color').trim(),
+                primaryColor: getComputedStyle(document.body).getPropertyValue('--table-striped-bg').trim(),
+                primaryTextColor: getComputedStyle(document.body).getPropertyValue('--text-color').trim(),
+                primaryBorderColor: getComputedStyle(document.body).getPropertyValue('--table-border-color').trim(),
+                lineColor: getComputedStyle(document.body).getPropertyValue('--text-color').trim(),
+                secondaryColor: getComputedStyle(document.body).getPropertyValue('--table-header-bg').trim(),
+                tertiaryColor: getComputedStyle(document.body).getPropertyValue('--bg-color').trim(),
+                // You can map more Mermaid variables here if needed
+                // See: https://mermaid.js.org/config/theming.html#theme-variables
+            };
 
-        const currentTheme = {
-            background: getComputedStyle(document.body).getPropertyValue('--bg-color').trim(),
-            primaryColor: getComputedStyle(document.body).getPropertyValue('--table-striped-bg').trim(),
-            primaryTextColor: getComputedStyle(document.body).getPropertyValue('--text-color').trim(),
-            primaryBorderColor: getComputedStyle(document.body).getPropertyValue('--table-border-color').trim(),
-            lineColor: getComputedStyle(document.body).getPropertyValue('--text-color').trim(),
-            secondaryColor: getComputedStyle(document.body).getPropertyValue('--table-header-bg').trim(),
-            tertiaryColor: getComputedStyle(document.body).getPropertyValue('--bg-color').trim(),
-            // You can map more Mermaid variables here if needed
-            // See: https://mermaid.js.org/config/theming.html#theme-variables
-        };
+            // 2. We configure Mermaid to use a 'base' theme, which allows us
+            // to override its colors with our own 'themeVariables' object.
+            const mermaidConfig = {
+                startOnLoad: true,
+                // Security level 'loose' is often needed to allow custom styling and advanced features
+                securityLevel: 'loose', 
+                theme: 'base',
+                themeVariables: currentTheme
+            };
 
-        // 2. We configure Mermaid to use a 'base' theme, which allows us
-        // to override its colors with our own 'themeVariables' object.
-        const mermaidConfig = {
-            startOnLoad: true,
-            // Security level 'loose' is often needed to allow custom styling and advanced features
-            securityLevel: 'loose', 
-            theme: 'base',
-            themeVariables: currentTheme
-        };
+            // 3. Initialize Mermaid with our dynamically created configuration.
+            mermaid.initialize(mermaidConfig);
 
-        // 3. Initialize Mermaid with our dynamically created configuration.
-        mermaid.initialize(mermaidConfig);
+            // 3. Restore the original diagram code before re-rendering.
+            document.querySelectorAll('.mermaid').forEach((element) => {
+                const originalCode = element.getAttribute('data-mermaid-code');
+                if (originalCode) {
+                    // Replace the existing SVG with the raw text code.
+                    element.innerHTML = originalCode;
+                    // Remove the processed attribute so Mermaid will re-render it.
+                    element.removeAttribute('data-processed');
+                }
+            });
 
-        // 3. Restore the original diagram code before re-rendering.
-        document.querySelectorAll('.mermaid').forEach((element) => {
-            const originalCode = element.getAttribute('data-mermaid-code');
-            if (originalCode) {
-                // Replace the existing SVG with the raw text code.
-                element.innerHTML = originalCode;
-                // Remove the processed attribute so Mermaid will re-render it.
-                element.removeAttribute('data-processed');
-            }
+            // 4. Run Mermaid again. It will now find the "new" diagrams and
+            // render them using the 'dark' or 'default' theme we just initialized.
+            mermaid.run();
         });
-
-        // 4. Run Mermaid again. It will now find the "new" diagrams and
-        // render them using the 'dark' or 'default' theme we just initialized.
-        mermaid.run();
     }
 
     themeToggle.addEventListener('change', function() {
@@ -209,52 +210,4 @@ document.addEventListener('DOMContentLoaded', async () => {
     initializeSidebar();
     initializeThemeSwitcher();
     initializeDiagramsAndCode();
-});
-
-
-document.addEventListener('DOMContentLoaded', () => {
-    // 1) mostra errori parse sotto ogni <pre class="mermaid"> e in console
-    mermaid.parseError = function(err, hash) {
-    console.group("Mermaid parseError");
-    console.error("Error object:", err);
-    console.error("Hash:", hash);
-    console.error("Full stringified error:", JSON.stringify(err, null, 2));
-    console.groupEnd();
-
-    document.querySelectorAll('pre.mermaid').forEach(p => {
-        const next = p.nextElementSibling;
-        if (next && next.classList && next.classList.contains('mermaid-err')) next.remove();
-        const errBox = document.createElement('div');
-        errBox.className = 'mermaid-err';
-        errBox.style.cssText =
-        'background:#fff0f0;border:1px solid #ffb3b3;color:#700;padding:8px;margin:8px 0;border-radius:6px;white-space:pre-wrap;';
-        errBox.textContent =
-        'Mermaid parse error:\n' +
-        (err && err.message ? err.message : String(err)) +
-        '\n\nFull error object:\n' +
-        JSON.stringify(err, null, 2) +
-        (hash ? '\n\nDetails:\n' + JSON.stringify(hash, null, 2) : '');
-        p.parentNode.insertBefore(errBox, p.nextSibling);
-    });
-    };
-
-
-    // 2) rimuovi l'indentazione causata dal nesting nel file HTML
-    document.querySelectorAll('pre.mermaid').forEach(p => {
-    const lines = p.textContent.split('\n');
-    let minIndent = Infinity;
-    lines.forEach(line => { if (line.trim()) { const m = line.match(/^\s*/); if (m) minIndent = Math.min(minIndent, m[0].length); } });
-    if (minIndent > 0 && isFinite(minIndent)) {
-        p.textContent = lines.map(l => l.slice(minIndent)).join('\n');
-    }
-    });
-
-    // 3) inizializza Mermaid in debug (aggiungi 'securityLevel' se vuoi permettere più opzioni)
-    const baseConfig = {
-    startOnLoad: true,
-    logLevel: 'debug',     // o 1
-    securityLevel: 'loose' // opzionale: evita blocchi di alcune direttive (usalo con cautela)
-    };
-    // se hai currentConfig dalla tua pagina, puoi fare: Object.assign(baseConfig, currentConfig)
-    mermaid.initialize(baseConfig);
 });
