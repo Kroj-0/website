@@ -1,30 +1,24 @@
 <!DOCTYPE html>
-<html>
+<html lang="it">
 <head>
- <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-  <script src="https://code.jquery.com/jquery-latest.min.js"></script>
-  <script src="https://unpkg.com/survey-jquery@1.8.22/survey.jquery.min.js"></script>
-  <script src="https://kit.fontawesome.com/93028db3a0.js" crossorigin="anonymous"></script>
-  <!-- Data Tables -->
-  <script src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js"></script>
-  <script src="https://cdn.datatables.net/1.10.22/js/dataTables.bootstrap4.min.js"></script>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons"/>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons"/>
+    <!-- Main custom CSS -->
+    <link rel="stylesheet" type="text/css" href="/css/stylesheet.css"  />
+    <!-- Prism theme placeholder -->
+    <link id="prism-theme-link" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" />
 
-  <!-- BOOTSTRAP Stylesheet -->
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-
-  <!-- BOOTSTRAP JS -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-
-  <!-- my css -->
-  <link rel="stylesheet" type="text/css" href="../../css/stylesheet.css"  />
-
+    <title>Wishlist | Home Project</title>
 </head>
 
 <body>
+    <!-- The sidebar will be injected here by our script -->
+    <div id="sidebar-container"></div>
+
     <main role="main">
         <div class="container">
             <div class="theme-switcher-container">
@@ -33,14 +27,12 @@
                     <div class="slider round"></div>
                 </label>
             </div>
-
-            <!-- Navigation -->
+            
+            <!-- NEW Secondary Top-Tab Navigation -->
             <nav class="main-nav">
-                <a href="../index.html">📝 Note</a>
-                <a href="index.html" class="active">🎁 Wishlist</a>
             </nav>
 
-            <h1>🏠 Home wishlist</h1>
+            <h1>🎁 Wishlist</h1>
 
             <div class="mt-3">
                 👑 La maggior parte dei prodotti, se siete così gentili da prenderli, dovrebbero essere presi esattamente come sono.<br/>
@@ -78,169 +70,157 @@
             </div>
         </div>
     </main>
-</body>
-<script type="text/javascript">
-  const sheetUrl = 'https://script.google.com/macros/s/AKfycbyxTRr52pFkHS4oui0zttc871bo5Hur_Z8CeTqQIdhGZnyBnL8NL7F3yPECC_pe4sq31A/exec';
 
-  async function fetchWishlist() {
-    const response = await fetch(sheetUrl);
-    const data = await response.json();
-    return data;
-  }
+    <!--
+      SCRIPT LOADING SECTION
+    -->
+    <script src="https://code.jquery.com/jquery-latest.min.js"></script>
+    <script src="https://kit.fontawesome.com/93028db3a0.js"></script>
+    
+    <script type="text/javascript">
+      const sheetUrl = 'https://script.google.com/macros/s/AKfycbyxTRr52pFkHS4oui0zttc871bo5Hur_Z8CeTqQIdhGZnyBnL8NL7F3yPECC_pe4sq31A/exec';
 
-  function createTable(data) {
-    const tableBody = document.getElementById('wishlist-table').querySelector('tbody');
-    tableBody.innerHTML = ''; // Clear existing rows
-
-    const filteredData = data.filter(item => item.id && item.id_anonym && item.product && item.url);
-
-    filteredData.forEach((item,index) => {
-      const row = document.createElement('tr');
-      row.style.height = '6vw';
-
-      const headerCell = document.createElement('th');
-      headerCell.scope = 'row';
-      headerCell.classList.add('numeric-column'); // Add class to hide on mobile
-      headerCell.textContent = index + 1;
-      row.appendChild(headerCell);
-
-      const imageCell = document.createElement('td');
-      imageCell.style.textAlign = 'center';
-      imageCell.style.width = '11%';
-      imageCell.style.position = 'relative';
-      imageCell.style.backgroundImage = `url('${item.img}')`;
-      imageCell.style.backgroundSize = 'contain';
-      imageCell.style.backgroundRepeat = 'no-repeat';
-      imageCell.style.backgroundPosition = 'center';
-      row.appendChild(imageCell);
-
-      const productCell = document.createElement('td');
-      productCell.style.verticalAlign = "middle";
-      const productLink = document.createElement('a');
-      productLink.href = item.url;
-      productLink.textContent = item.product;
-      productLink.target = "_blank";
-      productCell.appendChild(productLink);
-      row.appendChild(productCell);
-
-      const noteCell = document.createElement('td');
-      noteCell.style.verticalAlign = "middle"
-      noteCell.textContent = item.note;
-      row.appendChild(noteCell);
-
-      const websiteCell = document.createElement('td');
-      websiteCell.classList.add('link-column');
-      websiteCell.style.verticalAlign = "middle"
-      websiteCell.style.textAlign = 'center';
-      const link = document.createElement('a');
-      link.href = item.url;
-      link.textContent = item.website;
-      link.target = "_blank";
-      websiteCell.appendChild(link);
-      row.appendChild(websiteCell);
-
-      const actionCell = document.createElement('td');
-      actionCell.style.verticalAlign = "middle"
-      actionCell.style.textAlign = 'center';
-      actionCell.classList.add("font-weight-bold")
-      if(item.claimed){
-        actionCell.textContent = '✔️ Assegnato'
-        actionCell.classList.add('comment')        
+      async function fetchWishlist() {
+        const response = await fetch(sheetUrl);
+        const data = await response.json();
+        return data;
       }
-      else{
-        const assignButton = document.createElement('button');
-        assignButton.textContent = '✏️ Assegna';
-        assignButton.classList.add('btn', 'btn-assign');
-        assignButton.onclick = async () => {
-            assignButton.textContent = '⌛️ Attendi...';
-            assignButton.disabled = true;
-            await claimProduct(item.id_anonym, assignButton);
-        };
-        actionCell.appendChild(assignButton);
-      }
-      row.appendChild(actionCell);
 
-      tableBody.appendChild(row);
-    });
-  }
+      function createTable(data) {
+        const tableBody = document.getElementById('wishlist-table').querySelector('tbody');
+        tableBody.innerHTML = ''; // Clear existing rows
 
-  // --- CUSTOM ALERT FUNCTION ---
-  function showCustomAlert(message) {
-    return new Promise(resolve => {
-        const alertElement = document.getElementById('custom-alert');
-        const messageElement = document.getElementById('alert-message');
-        const closeButton = document.getElementById('alert-close-btn');
+        const filteredData = data.filter(item => item.id && item.id_anonym && item.product && item.url);
+        console.log(filteredData);
+        filteredData.forEach((item,index) => {
+          const row = document.createElement('tr');
+          row.style.height = '6vw';
 
-        messageElement.innerHTML = message;
-        alertElement.style.display = 'flex';
+          const headerCell = document.createElement('th');
+          headerCell.scope = 'row';
+          headerCell.classList.add('numeric-column'); // Add class to hide on mobile
+          headerCell.textContent = index + 1;
+          row.appendChild(headerCell);
 
-        function closeListener() {
-            alertElement.style.display = 'none';
-            closeButton.removeEventListener('click', closeListener);
-            resolve();
-        }
+          const imageCell = document.createElement('td');
+          imageCell.style.textAlign = 'center';
+          imageCell.style.width = '11%';
+          imageCell.style.position = 'relative';
+          imageCell.style.backgroundImage = `url('${item.img}')`;
+          imageCell.style.backgroundSize = 'contain';
+          imageCell.style.backgroundRepeat = 'no-repeat';
+          imageCell.style.backgroundPosition = 'center';
+          row.appendChild(imageCell);
 
-        closeButton.addEventListener('click', closeListener);
-    });
-  }
+          const productCell = document.createElement('td');
+          productCell.style.verticalAlign = "middle";
+          const productLink = document.createElement('a');
+          productLink.href = item.url;
+          productLink.textContent = item.product;
+          productLink.target = "_blank";
+          productCell.appendChild(productLink);
+          row.appendChild(productCell);
 
-  async function claimProduct(id, buttonElement) {
-    const message = JSON.stringify({ "id": id, "date_time": new Date().toLocaleString() });
-    try {
-        const response = await fetch(sheetUrl, {
-            method: 'POST',
-            mode: 'no-cors',
-            headers: {'Content-Type': 'application/json'},
-            body: message
+          const noteCell = document.createElement('td');
+          noteCell.style.verticalAlign = "middle"
+          noteCell.textContent = item.note;
+          row.appendChild(noteCell);
+
+          const websiteCell = document.createElement('td');
+          websiteCell.classList.add('link-column');
+          websiteCell.style.verticalAlign = "middle"
+          websiteCell.style.textAlign = 'center';
+          const link = document.createElement('a');
+          link.href = item.url;
+          link.textContent = item.website;
+          link.target = "_blank";
+          websiteCell.appendChild(link);
+          row.appendChild(websiteCell);
+
+          const actionCell = document.createElement('td');
+          actionCell.style.verticalAlign = "middle"
+          actionCell.style.textAlign = 'center';
+          actionCell.classList.add("font-weight-bold")
+          if(item.claimed){
+            actionCell.textContent = '✔️ Assegnato'
+            actionCell.classList.add('comment')        
+          }
+          else{
+            const assignButton = document.createElement('button');
+            assignButton.textContent = '✏️ Assegna';
+            assignButton.classList.add('btn', 'btn-assign');
+            assignButton.onclick = async () => {
+                assignButton.textContent = '⌛️ Attendi...';
+                assignButton.disabled = true;
+                await claimProduct(item.id_anonym, assignButton);
+            };
+            actionCell.appendChild(assignButton);
+          }
+          row.appendChild(actionCell);
+
+          tableBody.appendChild(row);
         });
+      }
 
-        await showCustomAlert('✅ Prodotto assegnato con successo!');
-        loadWishlist();
+      // --- CUSTOM ALERT FUNCTION ---
+      function showCustomAlert(message) {
+        return new Promise(resolve => {
+            const alertElement = document.getElementById('custom-alert');
+            const messageElement = document.getElementById('alert-message');
+            const closeButton = document.getElementById('alert-close-btn');
 
-    } catch (error) {
-        console.error('There was an error claiming the product:', error);
-        await showCustomAlert('✖️ C\'è stato un errore durante l\'assegnazione del prodotto.');
-        loadWishlist();
-    }
-  }
+            messageElement.innerHTML = message;
+            alertElement.style.display = 'flex';
+
+            function closeListener() {
+                alertElement.style.display = 'none';
+                closeButton.removeEventListener('click', closeListener);
+                resolve();
+            }
+
+            closeButton.addEventListener('click', closeListener);
+        });
+      }
+
+      async function claimProduct(id, buttonElement) {
+        const message = JSON.stringify({ "id": id, "date_time": new Date().toLocaleString() });
+        try {
+            const response = await fetch(sheetUrl, {
+                method: 'POST',
+                mode: 'no-cors',
+                headers: {'Content-Type': 'application/json'},
+                body: message
+            });
+
+            await showCustomAlert('✅ Prodotto assegnato con successo!');
+            loadWishlist();
+
+        } catch (error) {
+            console.error('There was an error claiming the product:', error);
+            await showCustomAlert('✖️ C\'è stato un errore durante l\'assegnazione del prodotto.');
+            loadWishlist();
+        }
+      }
 
 
-  async function loadWishlist() {
-    const loadingIndicator = document.getElementById('loading-indicator');
-    loadingIndicator.style.display = 'flex';
-    try {
-        const data = await fetchWishlist();
-        createTable(data);
-    } catch (error) {
-        console.error("Failed to load wishlist:", error);
-    } finally {
-        loadingIndicator.style.display = 'none';
-    }
-  }
+      async function loadWishlist() {
+        const loadingIndicator = document.getElementById('loading-indicator');
+        loadingIndicator.style.display = 'flex';
+        try {
+            const data = await fetchWishlist();
+            createTable(data);
+        } catch (error) {
+            console.error("Failed to load wishlist:", error);
+        } finally {
+            loadingIndicator.style.display = 'none';
+        }
+      }
 
-  const themeToggle = document.getElementById('checkbox');
-  const body = document.body;
+      document.addEventListener('DOMContentLoaded', async () => {
+        await loadWishlist();
+      });
 
-  themeToggle.addEventListener('change', function() {
-    if (this.checked) {
-        body.classList.add('dark-mode');
-        localStorage.setItem('theme', 'dark-mode');
-    } else {
-        body.classList.remove('dark-mode');
-        localStorage.setItem('theme', 'light-mode');
-    }
-  });
-
-  document.addEventListener('DOMContentLoaded', async () => {
-    const savedTheme = localStorage.getItem('theme');
-    if (savedTheme === 'dark-mode') {
-        body.classList.add('dark-mode');
-        themeToggle.checked = true;
-    } else {
-        themeToggle.checked = false;
-    }
-    await loadWishlist();
-  });
-
-</script>
+    </script>
+    <script src="/js/main.js"></script>
+</body>
 </html>
