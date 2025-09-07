@@ -28,9 +28,9 @@
                 </label>
             </div>
             
-            <!-- NEW Secondary Top-Tab Navigation -->
+            <!-- NEW Secondary Top-Tab Navigation 
             <nav class="main-nav">
-            </nav>
+            </nav>-->
 
             <h1>🎁 Wishlist</h1>
 
@@ -98,7 +98,6 @@
         tableBody.innerHTML = ''; // Clear existing rows
 
         const filteredData = data.filter(item => item.id && item.id_anonym && item.product && item.url);
-        console.log(filteredData);
         filteredData.forEach((item,index) => {
           const row = document.createElement('tr');
           row.style.height = '6vw';
