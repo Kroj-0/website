@@ -395,9 +395,8 @@
     
 
     <script>
-        let exchange_rate = 0.005775; // injected from Python
-
-        const cardData = [
+    let exchange_rate = 0.005775; // injected from Python
+    const cardData = [
     {
         "main_url": "http://www.toretoku.jp/item/details/154793",
         "name": "\u30b9\u30ab\u30fc\u30ec\u30c3\u30c8\uff06\u30d0\u30a4\u30aa\u30ec\u30c3\u30c8 \u5f37\u5316\u62e1\u5f35\u30d1\u30c3\u30af \u30dd\u30b1\u30e2\u30f3\u30ab\u30fc\u30c9151 \uff11BOX \u672a\u958b\u5c01",
@@ -9232,138 +9231,135 @@
     }
 ];
 
-                function initAdaptiveTable() {
-            const isMobile = window.innerWidth <= 1001;
+    // Use a global variable for the table so we can access it
+    let table; 
 
-            // Destroy existing table if it exists
-            if ($.fn.DataTable.isDataTable('#cardTable')) {
-                $('#cardTable').DataTable().destroy();
-            }
+    function initAdaptiveTable() {
+        const isMobile = window.innerWidth <= 1001;
+        const pageInfo = table ? table.page.info() : { page: 0, length: 10 }; // Save current page and length
 
-            const table = $('#cardTable').DataTable({
-                data: cardData,
-                destroy: true,
-                autoWidth: false,
-                scrollX: true,
-                deferRender: true,
-                order: [[4, 'desc']], // EUR price
-                pageLength: 10,
-                columns: [
-                    {
-                        data: 'image_url',
-                        orderable: false,
-                        render: d => d ? `<img src="${d}" class="card-image" loading="lazy">` : ''
-                    },
-                    {
-                        data: 'name',
-                        render: (d, type, row) => {
-                            // Crop name to 50 chars minimum, add link on mobile
-                            let displayName = d.length > 50 ? d.slice(0, 50) + '…' : d;
-                            if (isMobile) {
-                                return `<a href="${row.main_url}" target="_blank">${displayName}</a>`;
-                            }
-                            return displayName;
-                        }
-                    },
-                    { data: 'number', visible: !(isMobile && window.innerWidth < 500) },
-                    { data: 'rank', visible: !(isMobile && window.innerWidth < 400) },
-                    {
-                        data: 'price_jpy_val',
-                        className: 'price-eur',
-                        render: d => d == null ? 'N/A' : `€${(d * exchange_rate).toFixed(2)}`
-                    },
-                    {
-                        data: 'price_jpy_val',
-                        className: 'price-jpy',
-                        visible: !(isMobile && window.innerWidth < 600),
-                        render: d => d == null ? 'N/A' : `${d} JPY`
-                    },
-                    {
-                        data: 'main_url',
-                        orderable: false,
-                        visible: !isMobile,
-                        render: d => `<a href="${d}" target="_blank">View</a>`
-                    }
-                ]
-            });
+        // Destroy existing table if it exists
+        if ($.fn.DataTable.isDataTable('#cardTable')) {
+            $('#cardTable').DataTable().destroy();
         }
 
-        $(document).ready(function () {
-
-            // Handle exchange rate changes
-            $('#exchange-rate').on('input', function () {
-                const newRate = parseFloat(this.value);
-                const note = document.getElementById("exchange-rate-note");
-                if (!isNaN(newRate) && newRate > 0) {
-                    exchange_rate = newRate;
-                    table.rows().invalidate().draw(); // re-render EUR prices
-                
-                    // Hide note once user modifies the rate manually
-                    if (this.value !== this.defaultValue) {
-                        note.style.display = "none";
-                    } else {
-                        note.style.display = "block";
+        // Initialize the new table
+        table = $('#cardTable').DataTable({
+            data: cardData,
+            destroy: true,
+            autoWidth: false,
+            scrollX: true, // Always enable horizontal scroll on mobile
+            deferRender: true,
+            order: [[4, 'desc']], // EUR price
+            pageLength: pageInfo.length, // Restore previous length
+            displayStart: pageInfo.page * pageInfo.length, // Restore previous page
+            columns: [
+                {
+                    data: 'image_url',
+                    orderable: false,
+                    render: d => d ? `<img src="${d}" class="card-image" loading="lazy">` : ''
+                },
+                {
+                    data: 'name',
+                    render: (d, type, row) => {
+                        let displayName = d;
+                        if (type === 'display' && d.length > 50) {
+                           displayName = `<span title="${d}">${d.slice(0, 50)}…</span>`;
+                        }
+                        
+                        if (isMobile) {
+                            return `<a href="${row.main_url}" target="_blank">${displayName}</a>`;
+                        }
+                        return displayName;
                     }
+                },
+                { data: 'number', className: 'dt-center', visible: !(isMobile && window.innerWidth < 500) },
+                { data: 'rank', className: 'dt-center', visible: !(isMobile && window.innerWidth < 400) },
+                {
+                    data: 'price_jpy_val',
+                    className: 'price-eur dt-right',
+                    render: (d, type) => {
+                        if (type === 'display') return d == null ? 'N/A' : `€${(d * exchange_rate).toFixed(2)}`;
+                        return d; // for sorting
+                    }
+                },
+                {
+                    data: 'price_jpy_val',
+                    className: 'price-jpy dt-right',
+                    visible: !(isMobile && window.innerWidth < 600),
+                    render: (d, type) => {
+                        if (type === 'display') return d == null ? 'N/A' : `${d} JPY`;
+                        return d; // for sorting
+                    }
+                },
+                {
+                    data: 'main_url',
+                    orderable: false,
+                    className: 'dt-center',
+                    visible: !isMobile,
+                    render: d => `<a href="${d}" target="_blank">View</a>`
                 }
-            });
+            ]
+        });
+    }
 
-            // Dark mode toggle (your original logic)
-            const themeToggle = document.getElementById('theme-toggle');
-            const currentTheme = localStorage.getItem('theme');
-            if (currentTheme === 'dark') {
+    $(document).ready(function () {
+        // --- Dark Mode Logic ---
+        const themeToggle = document.getElementById('theme-toggle');
+        const applyTheme = (theme) => {
+            if (theme === 'dark') {
                 document.body.classList.add('dark-mode');
                 themeToggle.checked = true;
+            } else {
+                document.body.classList.remove('dark-mode');
+                themeToggle.checked = false;
             }
-            themeToggle.addEventListener('change', function () {
-                if (this.checked) {
-                    document.body.classList.add('dark-mode');
-                    localStorage.setItem('theme', 'dark');
-                } else {
-                    document.body.classList.remove('dark-mode');
-                    localStorage.setItem('theme', 'light');
-                }
-            });
-
-            // --- START: Focus Mode / Lightbox Logic ---
-            $('#cardTable').on('click', '.card-image', function(e) {
-                e.preventDefault(); // Prevent any default browser action
-                const imgSrc = $(this).attr('src');
-                
-                // Create and append the overlay with the image
-                const $overlay = $(
-                    `<div class="image-focus-overlay">
-                        <img src="${imgSrc}" alt="Focused card image">
-                    </div>`
-                );
-                $('body').append($overlay);
-
-                // Use a short timeout to allow the element to be added to the DOM before triggering the CSS transition
-                setTimeout(() => {
-                    $overlay.addClass('visible');
-                }, 10);
-            });
-
-            // Add a listener to the body to close the overlay when it's clicked
-            // This is more robust than attaching it directly to the overlay
-            $(document).on('click', '.image-focus-overlay', function() {
-                const $overlay = $(this);
-                $overlay.removeClass('visible');
-
-                // Remove the element from the DOM after the fade-out transition completes
-                setTimeout(() => {
-                    $overlay.remove();
-                }, 300); // This duration should match the CSS transition time
-            });
-            // --- END: Focus Mode / Lightbox Logic ---
-
-            initAdaptiveTable();
-
-            // Reinitialize on window resize
-            $(window).on('resize', function () {
-                initAdaptiveTable();
-            });
+        };
+        applyTheme(localStorage.getItem('theme'));
+        themeToggle.addEventListener('change', function () {
+            const newTheme = this.checked ? 'dark' : 'light';
+            localStorage.setItem('theme', newTheme);
+            applyTheme(newTheme);
         });
 
+        // --- Exchange Rate Logic ---
+        $('#exchange-rate').on('input', function () {
+            const newRate = parseFloat(this.value);
+            const note = document.getElementById("exchange-rate-note");
+            if (!isNaN(newRate) && newRate > 0 && table) {
+                exchange_rate = newRate;
+                table.rows().invalidate('data').draw(false); // Re-render but keep pagination
+                note.style.display = (this.value !== this.defaultValue) ? "none" : "block";
+            }
+        });
+
+        // --- Lightbox Logic ---
+        $('#cardTable').on('click', '.card-image', function(e) {
+            e.preventDefault();
+            const imgSrc = $(this).attr('src');
+            const $overlay = $(`<div class="image-focus-overlay"><img src="${imgSrc}" alt="Focused card image"></div>`);
+            $('body').append($overlay);
+            setTimeout(() => $overlay.addClass('visible'), 10);
+        });
+        $(document).on('click', '.image-focus-overlay', function() {
+            const $overlay = $(this);
+            $overlay.removeClass('visible');
+            setTimeout(() => $overlay.remove(), 300);
+        });
+
+        // --- DEBOUNCED RESIZE LOGIC ---
+        let resizeTimer;
+        $(window).on('resize', function() {
+            clearTimeout(resizeTimer);
+            resizeTimer = setTimeout(function() {
+                // This will only run once after resizing has stopped for 250ms
+                initAdaptiveTable();
+            }, 250);
+        });
+
+        // Initial table load
+        initAdaptiveTable();
+    });
     </script>
 
 </body>
