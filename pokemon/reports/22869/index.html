@@ -326,7 +326,13 @@
         }
         /* --- END: Focus Mode / Lightbox Styles --- */
 
-        /* Mobile: full width minus small gutters */
+        h1, h2, .exchange-rate-container, a {
+            word-break: break-word;   /* allow breaking inside words if needed */
+            overflow-wrap: anywhere;  /* modern way: break long unspaced strings */
+        }
+        
+
+        /* Optional: make images smaller on mobile */
         @media (max-width: 1001px) {
             .container {
                 max-width: 100%;     /* don't cap */
@@ -334,17 +340,7 @@
                 padding: 1em;
                 border-radius: 6px;
             }
-        }
 
-        h1, h2, .exchange-rate-container, a {
-            word-break: break-word;   /* allow breaking inside words if needed */
-            overflow-wrap: anywhere;  /* modern way: break long unspaced strings */
-        }
-
-        
-
-        /* Optional: make images smaller on mobile */
-        @media (max-width: 1001px) {
             .card-image {
                 width: 50px;
             }
@@ -371,9 +367,9 @@
         <h2>Source: <a href="https://www.toretoku.jp/blog/pokemon/pokemon_stock/post-22869/" target="_blank">post-22869</a></h2>
         <div class="exchange-rate-container">
             <label for="exchange-rate">JPY → EUR rate:</label>
-            <input type="number" id="exchange-rate" value="0.005775" step="0.0001" min="0.0001">
+            <input type="number" id="exchange-rate" value="0.005761" step="0.0001" min="0.0001">
             <small id="exchange-rate-note" class="exchange-rate-note">
-                Last updated: 2025-09-08 10:07:17.167791
+                Last updated: 2025-09-08 16:41:56.614269
             </small>
         </div>
         <table id="cardTable" class="display" style="width:100%">
@@ -395,7 +391,7 @@
     
 
     <script>
-    let exchange_rate = 0.005775; // injected from Python
+    let exchange_rate = 0.005761; // injected from Python
     const cardData = [
     {
         "main_url": "http://www.toretoku.jp/item/details/65968",
@@ -17500,7 +17496,8 @@
 ];
 
     // Use a global variable for the table so we can access it
-    let table; 
+    let table;
+    let lastWindowWidth = $(window).width(); // Store the initial width
 
     function initAdaptiveTable() {
         const isMobile = window.innerWidth <= 1001;
@@ -17615,13 +17612,17 @@
             setTimeout(() => $overlay.remove(), 300);
         });
 
-        // --- DEBOUNCED RESIZE LOGIC ---
+        // --- SMART DEBOUNCED RESIZE LOGIC ---
         let resizeTimer;
         $(window).on('resize', function() {
             clearTimeout(resizeTimer);
             resizeTimer = setTimeout(function() {
-                // This will only run once after resizing has stopped for 250ms
-                initAdaptiveTable();
+                const currentWidth = $(window).width();
+                // ONLY re-initialize if the width has actually changed
+                if (currentWidth !== lastWindowWidth) {
+                    initAdaptiveTable();
+                    lastWindowWidth = currentWidth; // Update the stored width
+                }
             }, 250);
         });
 
