@@ -325,6 +325,39 @@
             cursor: default; /* So the cursor isn't a pointer over the image */
         }
         /* --- END: Focus Mode / Lightbox Styles --- */
+
+        /* Mobile: full width minus small gutters */
+        @media (max-width: 1001px) {
+            .container {
+                max-width: 100%;     /* don't cap */
+                margin: 0 0.5em;     /* small side margins ("gutters") */
+                padding: 1em;
+                border-radius: 6px;
+            }
+        }
+
+        h1, h2, .exchange-rate-container, a {
+            word-break: break-word;   /* allow breaking inside words if needed */
+            overflow-wrap: anywhere;  /* modern way: break long unspaced strings */
+        }
+
+        
+
+        /* Optional: make images smaller on mobile */
+        @media (max-width: 1001px) {
+            .card-image {
+                width: 50px;
+            }
+
+            /* Crop product name if needed */
+            #cardTable td {
+                max-width: 50px; /* min width for names */
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+            }
+        }
+        
     </style>
 </head>
 
@@ -335,12 +368,12 @@
     </div>
     <div class="container">
         <h1>Toretoku Replenishment Report #22844</h1>
-        <h2>Source: <a href="https://www.toretoku.jp/blog/pokemon/pokemon_stock/post-22844/" target="_blank">https://www.toretoku.jp/blog/pokemon/pokemon_stock/post-22844/</a></h2>
+        <h2>Source: <a href="https://www.toretoku.jp/blog/pokemon/pokemon_stock/post-22844/" target="_blank">post-22844</a></h2>
         <div class="exchange-rate-container">
             <label for="exchange-rate">JPY → EUR rate:</label>
-            <input type="number" id="exchange-rate" value="0.005787" step="0.0001" min="0.0001">
+            <input type="number" id="exchange-rate" value="0.005775" step="0.0001" min="0.0001">
             <small id="exchange-rate-note" class="exchange-rate-note">
-                Last updated: 2025-09-07 17:52:41.181706
+                Last updated: 2025-09-08 10:07:17.167791
             </small>
         </div>
         <table id="cardTable" class="display" style="width:100%">
@@ -362,7 +395,7 @@
     
 
     <script>
-        let exchange_rate = 0.005787; // injected from Python
+        let exchange_rate = 0.005775; // injected from Python
 
         const cardData = [
     {
@@ -4507,52 +4540,63 @@
     }
 ];
 
-        $(document).ready(function () {
+                function initAdaptiveTable() {
+            const isMobile = window.innerWidth <= 1001;
+
+            // Destroy existing table if it exists
+            if ($.fn.DataTable.isDataTable('#cardTable')) {
+                $('#cardTable').DataTable().destroy();
+            }
+
             const table = $('#cardTable').DataTable({
                 data: cardData,
-                order: [[4, 'desc']],
-                pageLength: 10,
+                destroy: true,
+                autoWidth: false,
+                scrollX: true,
                 deferRender: true,
+                order: [[4, 'desc']], // EUR price
+                pageLength: 10,
                 columns: [
-                    { data: 'image_url', orderable: false,
-                    render: (d) => d ? `<img src="${d}" class="card-image" loading="lazy">` : '' },
-                    { data: 'name' },
                     {
-                        data: 'number',
-                        type: "num"
+                        data: 'image_url',
+                        orderable: false,
+                        render: d => d ? `<img src="${d}" class="card-image" loading="lazy">` : ''
                     },
-                    { data: 'rank' },
+                    {
+                        data: 'name',
+                        render: (d, type, row) => {
+                            // Crop name to 50 chars minimum, add link on mobile
+                            let displayName = d.length > 50 ? d.slice(0, 50) + '…' : d;
+                            if (isMobile) {
+                                return `<a href="${row.main_url}" target="_blank">${displayName}</a>`;
+                            }
+                            return displayName;
+                        }
+                    },
+                    { data: 'number', visible: !(isMobile && window.innerWidth < 500) },
+                    { data: 'rank', visible: !(isMobile && window.innerWidth < 400) },
                     {
                         data: 'price_jpy_val',
                         className: 'price-eur',
-                        type: "num",
-                        render: function (d, type, row) {
-                            if (d == null) return 'N/A';
-                            if (type === 'display') {
-                                return `€${(d * exchange_rate).toFixed(2)}`;   // What user sees
-                            }
-                            return d;  // For ordering and filtering
-                        }
+                        render: d => d == null ? 'N/A' : `€${(d * exchange_rate).toFixed(2)}`
                     },
                     {
                         data: 'price_jpy_val',
                         className: 'price-jpy',
-                        type: "num",
-                        render: function (d, type, row) {
-                            if (d == null) return 'N/A';
-                            if (type === 'display') {
-                                return `${d} JPY`;   // What user sees
-                            }
-                            return d;  // For ordering and filtering
-                        }
+                        visible: !(isMobile && window.innerWidth < 600),
+                        render: d => d == null ? 'N/A' : `${d} JPY`
                     },
                     {
                         data: 'main_url',
                         orderable: false,
-                        render: (d) => `<a href="${d}" target="_blank">View</a>`
+                        visible: !isMobile,
+                        render: d => `<a href="${d}" target="_blank">View</a>`
                     }
                 ]
             });
+        }
+
+        $(document).ready(function () {
 
             // Handle exchange rate changes
             $('#exchange-rate').on('input', function () {
@@ -4619,7 +4663,15 @@
                 }, 300); // This duration should match the CSS transition time
             });
             // --- END: Focus Mode / Lightbox Logic ---
+
+            initAdaptiveTable();
+
+            // Reinitialize on window resize
+            $(window).on('resize', function () {
+                initAdaptiveTable();
+            });
         });
+
     </script>
 
 </body>
