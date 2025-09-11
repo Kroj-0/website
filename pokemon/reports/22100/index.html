@@ -14914,34 +14914,42 @@
             }, 250);
         });
 
-        // --- START: Swipe-to-Paginate Logic for Mobile ---
-        
-        // We need to track the starting X position of the touch
+// Initial table load
+        initAdaptiveTable(); // <-- THIS LINE IS CRUCIAL. IT MUST RUN FIRST.
+
+
+        // ===============================================================
+        // --- START: NEW & CORRECTED Swipe-to-Paginate Logic for Mobile ---
+        // ===============================================================
         let touchStartX = 0;
-        
-        // Set a minimum distance for a swipe to be registered
-        const minSwipeDist = 75; // 75px, adjust as needed
-        
-        // Attach event listeners to the table's body
-        $('#cardTable tbody').on('touchstart', function (e) {
+        const minSwipeDist = 75; // Minimum distance (px) for a swipe
+
+        // We use event delegation by attaching the listener to the STATIC #cardTable parent.
+        // This listener will then catch events that bubble up from the DYNAMIC tbody element.
+        $('#cardTable').on('touchstart', 'tbody', function(e) {
             // Get the X coordinate of the initial touch
             touchStartX = e.originalEvent.touches[0].clientX;
         });
-        
-        $('#cardTable tbody').on('touchend', function (e) {
+
+        $('#cardTable').on('touchend', 'tbody', function(e) {
+            // Check if a touch event was even started
+            if (touchStartX === 0) return;
+
             // Get the X coordinate of the final touch position
             const touchEndX = e.originalEvent.changedTouches[0].clientX;
             const swipeDistance = touchEndX - touchStartX;
             
+            // Reset the start position for the next touch
+            touchStartX = 0;
+
             // Check if the swipe distance is significant
             if (Math.abs(swipeDistance) > minSwipeDist) {
                 
-                // It's a real swipe, so prevent any other click-like actions
+                // Prevent the default touch action (like scrolling or clicking)
                 e.preventDefault(); 
                 
-                // Get current page info from DataTable
                 const pageInfo = table.page.info();
-        
+
                 // SWIPE RIGHT (Previous Page)
                 if (swipeDistance > 0 && pageInfo.page > 0) {
                     table.page('previous').draw('page');
@@ -14952,10 +14960,7 @@
                 }
             }
         });
-        // --- END: Swipe-to-Paginate Logic ---
-        
-        // Initial table load
-        initAdaptiveTable();
+        // --- END: NEW Swipe Logic ---
     });
     </script>
 
