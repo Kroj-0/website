@@ -18526,6 +18526,46 @@
             }, 250);
         });
 
+        // --- START: Swipe-to-Paginate Logic for Mobile ---
+        
+        // We need to track the starting X position of the touch
+        let touchStartX = 0;
+        
+        // Set a minimum distance for a swipe to be registered
+        const minSwipeDist = 75; // 75px, adjust as needed
+        
+        // Attach event listeners to the table's body
+        $('#cardTable tbody').on('touchstart', function (e) {
+            // Get the X coordinate of the initial touch
+            touchStartX = e.originalEvent.touches[0].clientX;
+        });
+        
+        $('#cardTable tbody').on('touchend', function (e) {
+            // Get the X coordinate of the final touch position
+            const touchEndX = e.originalEvent.changedTouches[0].clientX;
+            const swipeDistance = touchEndX - touchStartX;
+            
+            // Check if the swipe distance is significant
+            if (Math.abs(swipeDistance) > minSwipeDist) {
+                
+                // It's a real swipe, so prevent any other click-like actions
+                e.preventDefault(); 
+                
+                // Get current page info from DataTable
+                const pageInfo = table.page.info();
+        
+                // SWIPE RIGHT (Previous Page)
+                if (swipeDistance > 0 && pageInfo.page > 0) {
+                    table.page('previous').draw('page');
+                } 
+                // SWIPE LEFT (Next Page)
+                else if (swipeDistance < 0 && pageInfo.page < pageInfo.pages - 1) {
+                    table.page('next').draw('page');
+                }
+            }
+        });
+        // --- END: Swipe-to-Paginate Logic ---
+        
         // Initial table load
         initAdaptiveTable();
     });
